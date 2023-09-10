@@ -17,6 +17,7 @@
     "tsx": "^3.12.8"
   },
   "dependencies": {
+    "@fastify/cors": "^8.3.0",
     "@prisma/client": "^5.2.0",
     "fastify": "^4.22.2",
     "typescript": "^5.2.2",

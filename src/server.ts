@@ -1,9 +1,16 @@
 import fastify from 'fastify'
 import { taskRoutes } from './routes/task'
 import { userRoutes } from './routes/user'
+import cors from '@fastify/cors'
 
 const app = fastify()
 const port = 3333
+
+app.register(cors, {
+  origin: '*',
+  methods: ['GET', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', '*'],
+})
 
 app.register(userRoutes, {
   prefix: 'user',
