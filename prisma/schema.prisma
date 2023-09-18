@@ -22,7 +22,7 @@ model Task {
   id          String   @id @default(uuid())
   createdAt   DateTime
   maturity    DateTime
-  completedAt DateTime
+  completedAt DateTime?
   title       String
   status      String
   priority    String

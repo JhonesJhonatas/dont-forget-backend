@@ -17,7 +17,6 @@ export async function taskRoutes(app: FastifyInstance) {
     const createTaskSchema = z.object({
       createdAt: z.string(),
       maturity: z.string(),
-      completedAt: z.string(),
       title: z.string(),
       status: z.string(),
       priority: z.string(),
@@ -28,7 +27,6 @@ export async function taskRoutes(app: FastifyInstance) {
     const {
       createdAt,
       maturity,
-      completedAt,
       title,
       status,
       priority,
@@ -41,7 +39,6 @@ export async function taskRoutes(app: FastifyInstance) {
         data: {
           createdAt,
           maturity,
-          completedAt,
           title,
           status,
           priority,
