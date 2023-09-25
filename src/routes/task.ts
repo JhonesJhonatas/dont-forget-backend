@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify'
+import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { prisma } from '../lib/prisma'
 import { z } from 'zod'
 
@@ -52,4 +52,32 @@ export async function taskRoutes(app: FastifyInstance) {
 
     return res.status(201).send()
   })
+
+  app.delete(
+    '/delete-task-by-id/:taskId',
+    async (req: FastifyRequest, res: FastifyReply) => {
+      const deleteTaskParams = z.object({
+        taskId: z.string(),
+      })
+
+      const { taskId } = deleteTaskParams.parse(req.params)
+
+      try {
+        const deleteTask = await prisma.task.delete({
+          where: {
+            id: taskId,
+          },
+        })
+
+        return {
+          deleteTask,
+        }
+      } catch (err) {
+        console.log('Error in /delete-task-by-id', err)
+        res.status(500).send({
+          error: 'Internal Server Error',
+        })
+      }
+    },
+  )
 }
