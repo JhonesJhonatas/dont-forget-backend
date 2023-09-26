@@ -4,11 +4,11 @@ import { z } from 'zod'
 
 const taskRoutes = Router()
 
-taskRoutes.get('/get-all-tasks', async () => {
+taskRoutes.get('/get-all-tasks', async (req, res) => {
   try {
     const tasks = await prisma.task.findMany()
 
-    return tasks
+    return res.send(tasks)
   } catch (err) {
     console.log('Error in /get-all-tasks')
   }

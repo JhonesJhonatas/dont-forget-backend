@@ -4,13 +4,13 @@ import { z } from 'zod'
 
 const userRoutes = Router()
 
-userRoutes.get('/get-all-users', async () => {
+userRoutes.get('/get-all-users', async (req, res) => {
   try {
     const users = await prisma.user.findMany()
 
-    return users
+    return res.send(users)
   } catch (err) {
-    console.log('Error in /get-all-users')
+    console.log('Error in /get-all-users', err)
   }
 })
 
@@ -32,7 +32,7 @@ userRoutes.post('/create-new-user', async (req, res) => {
       },
     })
   } catch (err) {
-    console.log('Error in /create-new-user')
+    console.log('Error in /create-new-user', err)
   }
 
   return res.status(201).send()
