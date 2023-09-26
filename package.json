@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts",
-    "vercel-build":"npx prisma migrate deploy",
+    "vercel-build": "npx prisma migrate deploy",
     "start": "tsx src/server.ts"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
+    "@types/node": "^20.7.0",
     "eslint": "^8.49.0",
     "prisma": "^5.2.0",
     "tsx": "^3.12.8"
@@ -21,6 +22,7 @@
   "dependencies": {
     "@fastify/cors": "^8.3.0",
     "@prisma/client": "^5.3.1",
+    "dotenv": "^16.3.1",
     "fastify": "^4.22.2",
     "typescript": "^5.2.2",
     "zod": "^3.22.2"
