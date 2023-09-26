@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts",
-    "vercel-build":"npx prisma migrate deploy"
+    "vercel-build":"npx prisma migrate deploy",
+    "start": "tsx src/server.ts"
   },
   "keywords": [],
   "author": "",
