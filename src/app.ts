@@ -6,8 +6,6 @@ import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import 'express-async-errors'
 
-import '@shared/container'
-
 import { AppError } from './errors/AppError'
 
 import { router } from './routes'
