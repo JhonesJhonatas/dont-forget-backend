@@ -7,7 +7,7 @@
     "dev": "tsx src/server.ts",
     "vercel-build": "npx prisma migrate deploy",
     "start": "tsx src/server.ts",
-    "migration:run": "npx prisma migrate dev"
+    "migrate:run": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
