@@ -61,9 +61,7 @@ taskRoutes.delete('/delete-task-by-id/:taskId', async (req, res) => {
       },
     })
 
-    return {
-      deleteTask,
-    }
+    return res.send(deleteTask)
   } catch (err) {
     console.log('Error in /delete-task-by-id', err)
     res.status(500).send({
