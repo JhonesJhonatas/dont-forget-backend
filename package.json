@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts",
     "vercel-build": "npx prisma migrate deploy",
@@ -11,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
     "@types/cors": "^2.8.14",
@@ -27,7 +26,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "fastify": "^4.22.2",
+    "express-async-errors": "^3.1.1",
+    "reflect-metadata": "^0.1.13",
     "typescript": "^5.2.2",
     "zod": "^3.22.2"
   }
