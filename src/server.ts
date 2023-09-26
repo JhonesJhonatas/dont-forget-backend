@@ -1,29 +1,7 @@
-import fastify from 'fastify'
-import 'dotenv/config'
-import { taskRoutes } from './routes/task'
-import { userRoutes } from './routes/user'
-import cors from '@fastify/cors'
+import { app } from './app'
 
-const app = fastify()
-const port = process.env.PORT || 3333
+const PORT = process.env.PORT || 3333
 
-app.register(cors, {
-  origin: '*',
-  methods: ['GET', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type', '*'],
-})
-
-app.register(userRoutes, {
-  prefix: 'user',
-})
-
-app.register(taskRoutes, {
-  prefix: 'tasks',
-})
-
-try {
-  app.listen(port)
-  console.log(`Http server running on port: ${port}`)
-} catch (err) {
-  app.log.error(err)
-}
+app.listen(PORT, () =>
+  console.log(`Server is running in on port ${PORT}! 🚀🚀🚀`),
+)
