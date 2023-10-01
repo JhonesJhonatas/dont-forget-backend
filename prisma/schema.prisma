@@ -20,7 +20,7 @@ model User {
 
 model Task {
   id          String    @id @default(uuid())
-  createdAt   DateTime
+  createdAt   DateTime?
   maturity    DateTime
   completedAt DateTime?
   title       String

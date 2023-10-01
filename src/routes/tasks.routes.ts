@@ -87,7 +87,7 @@ taskRoutes.put('/update-task-by-id/:userId', async (req, res) => {
   console.log(req.body)
 
   try {
-    await prisma.task.update({
+    const updatedTask = await prisma.task.update({
       where: { id },
       data: {
         maturity,
@@ -98,6 +98,8 @@ taskRoutes.put('/update-task-by-id/:userId', async (req, res) => {
         completedAt,
       },
     })
+
+    res.send(updatedTask)
   } catch (err) {
     console.log('Error in /get-tasks-by-status', err)
     res.status(500).send({
