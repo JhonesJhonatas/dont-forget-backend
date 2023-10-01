@@ -14,6 +14,29 @@ taskRoutes.get('/get-all-tasks', async (req, res) => {
   }
 })
 
+taskRoutes.get('/get-tasks-by-status', async (req, res) => {
+  const getTasksParams = z.object({
+    status: z.string(),
+  })
+
+  const { status } = getTasksParams.parse(req.body)
+
+  try {
+    const tasks = await prisma.task.findMany({
+      where: {
+        status,
+      },
+    })
+
+    return res.send(tasks)
+  } catch (err) {
+    console.log('Error in /get-tasks-by-status', err)
+    res.status(500).send({
+      error: 'Internal Server Error',
+    })
+  }
+})
+
 taskRoutes.post('/create-new-task', async (req, res) => {
   const createTaskSchema = z.object({
     createdAt: z.string(),
