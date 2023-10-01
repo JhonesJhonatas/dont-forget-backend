@@ -66,6 +66,56 @@ taskRoutes.post('/create-new-task', async (req, res) => {
   return res.status(201).send()
 })
 
+taskRoutes.put('/update-task-by-id', async (req, res) => {
+  const updateTask = z.object({
+    id: z.string(),
+    createdAt: z.string(),
+    completedAt: z.string(),
+    maturity: z.string(),
+    title: z.string(),
+    status: z.string(),
+    priority: z.string(),
+    description: z.string(),
+    userId: z.string(),
+  })
+
+  const {
+    id,
+    maturity,
+    priority,
+    status,
+    title,
+    description,
+    completedAt,
+    createdAt,
+    userId,
+  } = updateTask.parse(req.body)
+
+  try {
+    await prisma.task.update({
+      where: {
+        id,
+      },
+      data: {
+        id,
+        maturity,
+        priority,
+        status,
+        title,
+        description,
+        completedAt,
+        createdAt,
+        userId,
+      },
+    })
+  } catch (err) {
+    console.log('Error in /get-tasks-by-status', err)
+    res.status(500).send({
+      error: 'Internal Server Error',
+    })
+  }
+})
+
 taskRoutes.delete('/delete-task-by-id/:taskId', async (req, res) => {
   const deleteTaskParams = z.object({
     taskId: z.string(),
