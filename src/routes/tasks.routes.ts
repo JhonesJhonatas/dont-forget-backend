@@ -14,17 +14,13 @@ taskRoutes.get('/get-all-tasks', async (req, res) => {
   }
 })
 
-taskRoutes.get('/get-tasks-by-status', async (req, res) => {
-  const getTasksParams = z.object({
-    status: z.string(),
-  })
-
-  const { status } = getTasksParams.parse(req.body)
+taskRoutes.get('/get-tasks-by-status/:taskStatus', async (req, res) => {
+  const { taskStatus } = req.params
 
   try {
     const tasks = await prisma.task.findMany({
       where: {
-        status,
+        status: taskStatus,
       },
     })
 
