@@ -66,9 +66,11 @@ taskRoutes.post('/create-new-task', async (req, res) => {
   return res.status(201).send()
 })
 
-taskRoutes.put('/update-task-by-id', async (req, res) => {
-  const updateTask = z.object({
+taskRoutes.put('/update-task-by-id/:userId', async (req, res) => {
+  const paramsSchema = z.object({
     id: z.string(),
+  })
+  const updateTask = z.object({
     completedAt: z.string(),
     maturity: z.string(),
     title: z.string(),
@@ -77,14 +79,16 @@ taskRoutes.put('/update-task-by-id', async (req, res) => {
     description: z.string(),
   })
 
-  const { id, maturity, priority, status, title, description, completedAt } =
+  const { id } = paramsSchema.parse(req.params)
+
+  const { maturity, priority, status, title, description, completedAt } =
     updateTask.parse(req.body)
+
+  console.log(req.body)
 
   try {
     await prisma.task.update({
-      where: {
-        id,
-      },
+      where: { id },
       data: {
         maturity,
         priority,
