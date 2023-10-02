@@ -80,29 +80,21 @@ taskRoutes.put('/update-task-by-id/:taskId', async (req, res) => {
     description: z.string(),
   })
 
-  const taskId = reqParamsSchema.parse(req.params)
+  const { taskId } = reqParamsSchema.parse(req.params)
 
-  const { completedAt, description, maturity, priority, status, title } =
-    reqBodyParams.parse(req.body)
+  const updatedTaskData = reqBodyParams.parse(req.body)
 
   try {
     await prisma.task.update({
       where: {
         id: taskId,
       },
-      data: {
-        completedAt,
-        description,
-        maturity,
-        priority,
-        status,
-        title,
-      },
+      data: updatedTaskData,
     })
 
-    return res.status(200)
+    return res.status(200).json({ message: 'Tarefa atualizada com sucesso' })
   } catch (err) {
-    res.send(err)
+    return res.status(400).json({ error: 'Erro na atualização da tarefa' })
   }
 })
 
