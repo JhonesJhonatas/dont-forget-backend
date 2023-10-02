@@ -82,14 +82,15 @@ taskRoutes.put('/update-task-by-id/:taskId', async (req, res) => {
 
   const { taskId } = reqParamsSchema.parse(req.params)
 
-  const updatedTaskData = reqBodyParams.parse(req.body)
+  const { completedAt, description, maturity, priority, status, title } =
+    reqBodyParams.parse(req.body)
 
   try {
     await prisma.task.update({
       where: {
         id: taskId,
       },
-      data: updatedTaskData,
+      data: { completedAt, description, maturity, priority, status, title },
     })
 
     return res.status(200).json({ message: 'Tarefa atualizada com sucesso' })
