@@ -66,11 +66,12 @@ taskRoutes.post('/create-new-task', async (req, res) => {
   return res.status(201).send()
 })
 
-taskRoutes.put('/update-task-by-id/:userId', async (req, res) => {
-  const paramsSchema = z.object({
-    id: z.string(),
+taskRoutes.put('/update-task-by-id/:taskId', async (req, res) => {
+  const reqParamsSchema = z.object({
+    taskId: z.string(),
   })
-  const updateTask = z.object({
+
+  const reqBodyParams = z.object({
     completedAt: z.string(),
     maturity: z.string(),
     title: z.string(),
@@ -79,32 +80,29 @@ taskRoutes.put('/update-task-by-id/:userId', async (req, res) => {
     description: z.string(),
   })
 
-  const { id } = paramsSchema.parse(req.params)
+  const taskId = reqParamsSchema.parse(req.params)
 
-  const { maturity, priority, status, title, description, completedAt } =
-    updateTask.parse(req.body)
-
-  console.log(req.body)
+  const { completedAt, description, maturity, priority, status, title } =
+    reqBodyParams.parse(req.body)
 
   try {
-    const updatedTask = await prisma.task.update({
-      where: { id },
+    await prisma.task.update({
+      where: {
+        id: taskId,
+      },
       data: {
+        completedAt,
+        description,
         maturity,
         priority,
         status,
         title,
-        description,
-        completedAt,
       },
     })
 
-    res.send(updatedTask)
+    return res.status(200)
   } catch (err) {
-    console.log('Error in /get-tasks-by-status', err)
-    res.status(500).send({
-      error: 'Internal Server Error',
-    })
+    res.send(err)
   }
 })
 
