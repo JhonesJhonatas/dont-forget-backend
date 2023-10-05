@@ -72,7 +72,6 @@ taskRoutes.put('/update-task-by-id/:taskId', async (req, res) => {
   })
 
   const reqBodyParams = z.object({
-    completedAt: z.string(),
     maturity: z.string(),
     title: z.string(),
     status: z.string(),
@@ -82,7 +81,7 @@ taskRoutes.put('/update-task-by-id/:taskId', async (req, res) => {
 
   const { taskId } = reqParamsSchema.parse(req.params)
 
-  const { completedAt, description, maturity, priority, status, title } =
+  const { description, maturity, priority, status, title } =
     reqBodyParams.parse(req.body)
 
   try {
@@ -90,12 +89,13 @@ taskRoutes.put('/update-task-by-id/:taskId', async (req, res) => {
       where: {
         id: taskId,
       },
-      data: { completedAt, description, maturity, priority, status, title },
+      data: { description, maturity, priority, status, title },
     })
 
     return res.status(200).json({ message: 'Tarefa atualizada com sucesso' })
   } catch (err) {
-    return res.status(400).json({ error: 'Erro na atualização da tarefa' })
+    console.log(err)
+    return res.status(400).json({ error: 'Erro na atualização da tarefa', err })
   }
 })
 
