@@ -1,7 +1,15 @@
-import { app } from './app'
+import 'reflect-metadata'
+import './shared/container'
+import express from 'express'
+import { routes } from './routes'
 
-const PORT = process.env.PORT || 3333
+const app = express()
+const port = 3333
 
-app.listen(PORT, () =>
-  console.log(`Server is running in on port ${PORT}! 🚀🚀🚀`),
-)
+app.use(express.json())
+
+app.use(routes)
+
+app.listen(port, () => {
+  console.log(`Server running on port: ${port}. 🚀🚀`)
+})
