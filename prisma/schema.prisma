@@ -25,21 +25,21 @@ model Project {
   title       String
   description String
   color       String
-  created_at  DateTime
+  createdAt   DateTime
   user        User     @relation(fields: [userId], references: [id])
   userId      String
   Tasks       Tasks[]
 }
 
 model Tasks {
-  id           String    @id @default(uuid())
-  title        String
-  description  String
-  priority     String
-  status       String
-  maturity     DateTime
-  created_at   DateTime
-  completed_at DateTime?
-  project      Project   @relation(fields: [projectId], references: [id])
-  projectId    String
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  priority    String
+  status      String
+  maturity    DateTime
+  createdAt   DateTime
+  completedAt DateTime?
+  project     Project   @relation(fields: [projectId], references: [id])
+  projectId   String
 }
