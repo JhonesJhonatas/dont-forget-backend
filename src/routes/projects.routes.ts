@@ -6,7 +6,7 @@ const projectRoutes = Router()
 
 const createProjectController = new CreateProjectController()
 
-projectRoutes.use(
+projectRoutes.post(
   '/create-project',
   ensureAuthenticated,
   createProjectController.handle,
