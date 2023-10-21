@@ -1,4 +1,4 @@
-import { Tasks } from '@prisma/client'
+import { OpenedTasks } from '@prisma/client'
 import { ITasksRepository } from '../ITasksRepository'
 import { prismaClient } from '../../../../prisma'
 import { ICreateTaskDTO } from '../../dtos/ICreateTaskDTO'
@@ -12,9 +12,8 @@ class TaskRepository implements ITasksRepository {
     projectId,
     status,
     title,
-    completedAt,
-  }: ICreateTaskDTO): Promise<Tasks> {
-    const task = await prismaClient.tasks.create({
+  }: ICreateTaskDTO): Promise<OpenedTasks> {
+    const task = await prismaClient.openedTasks.create({
       data: {
         createdAt,
         description,
@@ -22,7 +21,6 @@ class TaskRepository implements ITasksRepository {
         priority,
         status,
         title,
-        completedAt,
         projectId,
       },
     })

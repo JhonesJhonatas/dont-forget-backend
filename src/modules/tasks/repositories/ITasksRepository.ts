@@ -1,4 +1,4 @@
-import { Tasks } from '@prisma/client'
+import { OpenedTasks } from '@prisma/client'
 import { ICreateTaskDTO } from '../dtos/ICreateTaskDTO'
 
 interface ITasksRepository {
@@ -10,8 +10,7 @@ interface ITasksRepository {
     projectId,
     status,
     title,
-    completedAt,
-  }: ICreateTaskDTO): Promise<Tasks>
+  }: ICreateTaskDTO): Promise<OpenedTasks>
 }
 
 export { ITasksRepository }

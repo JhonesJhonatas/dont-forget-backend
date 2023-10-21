@@ -5,7 +5,6 @@ interface ICreateTaskDTO {
   status: string
   maturity: Date
   createdAt: Date
-  completedAt?: Date
   projectId: string
 }
 
