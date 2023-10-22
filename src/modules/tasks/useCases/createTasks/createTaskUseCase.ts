@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
-import { ITasksRepository } from '../repositories/ITasksRepository'
-import { ICreateTaskDTO } from '../dtos/ICreateTaskDTO'
+import { ITasksRepository } from '../../repositories/ITasksRepository'
+import { ICreateTaskDTO } from '../../dtos/ICreateTaskDTO'
 
 @injectable()
 class CreateTaskUseCase {
@@ -17,7 +17,6 @@ class CreateTaskUseCase {
     projectId,
     status,
     title,
-    completedAt,
   }: ICreateTaskDTO) {
     const task = await this.tasksRepository.create({
       createdAt,
@@ -27,7 +26,6 @@ class CreateTaskUseCase {
       projectId,
       status,
       title,
-      completedAt,
     })
 
     return task

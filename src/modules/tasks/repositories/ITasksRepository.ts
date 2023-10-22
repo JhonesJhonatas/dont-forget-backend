@@ -11,6 +11,8 @@ interface ITasksRepository {
     status,
     title,
   }: ICreateTaskDTO): Promise<OpenedTasks>
+
+  findOpenedTasksByProjectId(projectId: string): Promise<OpenedTasks[]>
 }
 
 export { ITasksRepository }

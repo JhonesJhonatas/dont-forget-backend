@@ -12,7 +12,6 @@ class CreateTaskController {
       projectId,
       status,
       title,
-      completedAt,
     } = request.body
 
     const createTaskUseCase = container.resolve(CreateTaskUseCase)
@@ -25,7 +24,6 @@ class CreateTaskController {
       projectId,
       status,
       title,
-      completedAt,
     })
 
     return response.status(201).json(task)
