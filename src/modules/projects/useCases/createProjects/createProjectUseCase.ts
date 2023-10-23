@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
-import { ICreatedProjectDTO } from '../dtos/ICreateProjectDTO'
-import { IProjectsRepository } from '../repositories/IProjectsRepository'
+import { IProjectsRepository } from '../../repositories/IProjectsRepository'
+import { ICreatedProjectDTO } from '../../dtos/ICreateProjectDTO'
 
 @injectable()
 class CreateProjectUseCase {

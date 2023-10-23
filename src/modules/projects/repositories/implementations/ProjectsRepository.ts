@@ -23,6 +23,16 @@ class ProjectsRepository implements IProjectsRepository {
 
     return project
   }
+
+  async listProjects(userId: string): Promise<Project[]> {
+    const projects = await prismaClient.project.findMany({
+      where: {
+        userId,
+      },
+    })
+
+    return projects
+  }
 }
 
 export { ProjectsRepository }

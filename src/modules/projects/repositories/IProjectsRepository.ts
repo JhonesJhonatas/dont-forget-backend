@@ -9,6 +9,8 @@ interface IProjectsRepository {
     title,
     userId,
   }: ICreatedProjectDTO): Promise<Project>
+
+  listProjects(userId: string): Promise<Project[]>
 }
 
 export { IProjectsRepository }

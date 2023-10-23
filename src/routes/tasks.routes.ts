@@ -16,6 +16,7 @@ taskRoutes.post(
 
 taskRoutes.get(
   '/list-opened-tasks/:projectId',
+  ensureAuthenticated,
   listOpenedTasksController.handle,
 )
 
