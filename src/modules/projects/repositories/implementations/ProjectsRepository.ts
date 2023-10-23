@@ -2,6 +2,7 @@ import { Project } from '@prisma/client'
 import { ICreatedProjectDTO } from '../../dtos/ICreateProjectDTO'
 import { IProjectsRepository } from '../IProjectsRepository'
 import { prismaClient } from '../../../../prisma'
+import { IEditProjectDTO } from '../../dtos/IEditProjectDTO'
 
 class ProjectsRepository implements IProjectsRepository {
   async create({
@@ -32,6 +33,26 @@ class ProjectsRepository implements IProjectsRepository {
     })
 
     return projects
+  }
+
+  async editProject({
+    id,
+    title,
+    description,
+    color,
+  }: IEditProjectDTO): Promise<Project> {
+    const project = await prismaClient.project.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        description,
+        color,
+      },
+    })
+
+    return project
   }
 }
 
