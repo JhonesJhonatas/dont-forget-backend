@@ -4,7 +4,8 @@ import { CreateProjectUseCase } from './createProjectUseCase'
 
 class CreateProjectController {
   async handle(request: Request, response: Response) {
-    const { color, createdAt, description, title, userId } = request.body
+    const { color, createdAt, description, title } = request.body
+    const { id: userId } = request.user
 
     const createProjectUseCase = container.resolve(CreateProjectUseCase)
 

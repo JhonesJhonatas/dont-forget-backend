@@ -4,7 +4,7 @@ import { ListProjectsUseCase } from './listProjectsUseCase'
 
 class ListProjectsController {
   async handle(request: Request, response: Response) {
-    const { userId } = request.params
+    const { id: userId } = request.user
 
     const listProjects = container.resolve(ListProjectsUseCase)
 

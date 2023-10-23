@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { ensureAuthenticated } from '../shared/middlewares/ensureAuthenticated'
 import { CreateProjectController } from '../modules/projects/useCases/createProjects/CreateProjectController'
-import { ListOpenedTasksController } from '../modules/tasks/useCases/listOpenedTasks/ListOpenedTaskController'
+import { ListProjectsController } from '../modules/projects/useCases/listProjects/ListProjectsController'
 
 const projectRoutes = Router()
 
 const createProjectController = new CreateProjectController()
-const listProjectsController = new ListOpenedTasksController()
+const listProjectsController = new ListProjectsController()
 
 projectRoutes.post(
   '/create-project',
@@ -15,7 +15,7 @@ projectRoutes.post(
 )
 
 projectRoutes.get(
-  '/list-projects-by-user-id/:userId',
+  '/list-projects',
   ensureAuthenticated,
   listProjectsController.handle,
 )
