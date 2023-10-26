@@ -25,7 +25,7 @@ model Project {
   title          String
   description    String
   color          String
-  createdAt      DateTime
+  createdAt      DateTime         @default(now())
   user           User             @relation(fields: [userId], references: [id])
   userId         String
   OpenedTasks    OpenedTasks[]
@@ -39,7 +39,7 @@ model OpenedTasks {
   priority    String
   status      String
   maturity    DateTime
-  createdAt   DateTime
+  createdAt   DateTime @default(now())
   project     Project  @relation(fields: [projectId], references: [id])
   projectId   String
 }
@@ -51,7 +51,7 @@ model ConcludedTasks {
   priority    String
   status      String
   maturity    DateTime
-  createdAt   DateTime
+  createdAt   DateTime @default(now())
   completedAt DateTime
   project     Project  @relation(fields: [projectId], references: [id])
   projectId   String

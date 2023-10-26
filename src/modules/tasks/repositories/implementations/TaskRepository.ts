@@ -6,7 +6,6 @@ import { IEditTaskDTO } from '../../dtos/IEditTaskDTO'
 
 class TaskRepository implements ITasksRepository {
   async create({
-    createdAt,
     description,
     maturity,
     priority,
@@ -16,7 +15,6 @@ class TaskRepository implements ITasksRepository {
   }: ICreateTaskDTO): Promise<OpenedTasks> {
     const task = await prismaClient.openedTasks.create({
       data: {
-        createdAt,
         description,
         maturity,
         priority,

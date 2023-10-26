@@ -4,7 +4,6 @@ import { IEditTaskDTO } from '../dtos/IEditTaskDTO'
 
 interface ITasksRepository {
   create({
-    createdAt,
     description,
     maturity,
     priority,

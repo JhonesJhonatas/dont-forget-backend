@@ -4,26 +4,20 @@ import { CreateTaskUseCase } from './createTaskUseCase'
 
 class CreateTaskController {
   async handle(request: Request, response: Response) {
-    const {
-      createdAt,
-      description,
-      maturity,
-      priority,
-      projectId,
-      status,
-      title,
-    } = request.body
+    const { description, maturity, priority, projectId, status, title } =
+      request.body
+    const { id: userId } = request.user
 
     const createTaskUseCase = container.resolve(CreateTaskUseCase)
 
     const task = await createTaskUseCase.execute({
-      createdAt,
       description,
       maturity,
       priority,
       projectId,
       status,
       title,
+      userId,
     })
 
     return response.status(201).json(task)

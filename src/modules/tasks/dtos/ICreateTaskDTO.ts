@@ -4,8 +4,8 @@ interface ICreateTaskDTO {
   priority: string
   status: string
   maturity: Date
-  createdAt: Date
   projectId: string
+  userId?: string
 }
 
 export { ICreateTaskDTO }

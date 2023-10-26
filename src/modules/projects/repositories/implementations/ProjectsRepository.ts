@@ -7,7 +7,6 @@ import { IEditProjectDTO } from '../../dtos/IEditProjectDTO'
 class ProjectsRepository implements IProjectsRepository {
   async create({
     color,
-    createdAt,
     description,
     title,
     userId,
@@ -15,7 +14,6 @@ class ProjectsRepository implements IProjectsRepository {
     const project = await prismaClient.project.create({
       data: {
         color,
-        createdAt,
         description,
         title,
         userId,

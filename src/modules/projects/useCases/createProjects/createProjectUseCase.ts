@@ -9,16 +9,9 @@ class CreateProjectUseCase {
     private projectsRepository: IProjectsRepository,
   ) {}
 
-  async execute({
-    color,
-    createdAt,
-    description,
-    title,
-    userId,
-  }: ICreatedProjectDTO) {
+  async execute({ color, description, title, userId }: ICreatedProjectDTO) {
     const projects = await this.projectsRepository.create({
       color,
-      createdAt,
       description,
       title,
       userId,
