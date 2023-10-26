@@ -19,6 +19,8 @@ interface IProjectsRepository {
     description,
     color,
   }: IEditProjectDTO): Promise<Project>
+
+  deletProject(projectId: string): Promise<Project>
 }
 
 export { IProjectsRepository }

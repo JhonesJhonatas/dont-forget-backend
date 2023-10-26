@@ -54,6 +54,16 @@ class ProjectsRepository implements IProjectsRepository {
 
     return project
   }
+
+  async deletProject(projectId: string): Promise<Project> {
+    const project = await prismaClient.project.delete({
+      where: {
+        id: projectId,
+      },
+    })
+
+    return project
+  }
 }
 
 export { ProjectsRepository }
