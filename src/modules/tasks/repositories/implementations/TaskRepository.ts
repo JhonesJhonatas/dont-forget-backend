@@ -81,7 +81,7 @@ class TaskRepository implements ITasksRepository {
     status,
     title,
   }: IEditTaskDTO): Promise<OpenedTasks> {
-    const task = await prismaClient.openedTasks.update({
+    const updatedTask = await prismaClient.openedTasks.update({
       where: {
         id,
       },
@@ -96,7 +96,7 @@ class TaskRepository implements ITasksRepository {
       },
     })
 
-    return task
+    return updatedTask
   }
 
   async deleteOpenedTaskById(taskId: string): Promise<OpenedTasks> {
