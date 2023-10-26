@@ -1,10 +1,14 @@
 import { Router } from 'express'
+import { userRoutes } from './user.routes'
+import { projectRoutes } from './projects.routes'
 import { taskRoutes } from './tasks.routes'
-import { userRoutes } from './users.routes'
 
-const router = Router()
+const routes = Router()
 
-router.use('/users', userRoutes)
-router.use('/tasks', taskRoutes)
+routes.use('/users', userRoutes)
 
-export { router }
+routes.use('/projects', projectRoutes)
+
+routes.use('/tasks', taskRoutes)
+
+export { routes }

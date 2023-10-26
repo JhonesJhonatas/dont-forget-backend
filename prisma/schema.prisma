@@ -11,22 +11,50 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
   email     String
-  birthDate String
-  Task      Task[]
+  role      String
+  password  String
+  create_at DateTime  @default(now())
+  Project   Project[]
 }
 
-model Task {
-  id          String    @id @default(uuid())
-  createdAt   DateTime?
-  maturity    DateTime
-  completedAt DateTime?
+model Project {
+  id             String           @id @default(uuid())
+  title          String
+  description    String
+  color          String
+  createdAt      DateTime         @default(now())
+  user           User             @relation(fields: [userId], references: [id])
+  userId         String
+  OpenedTasks    OpenedTasks[]
+  ConcludedTasks ConcludedTasks[]
+}
+
+model OpenedTasks {
+  id          String   @id @default(uuid())
   title       String
-  status      String
-  priority    String
   description String
-  user        User      @relation(fields: [userId], references: [id])
+  priority    String
+  status      String
+  maturity    DateTime
+  createdAt   DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
+  userId      String
+}
+
+model ConcludedTasks {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  priority    String
+  status      String
+  maturity    DateTime
+  createdAt   DateTime
+  completedAt DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
   userId      String
 }

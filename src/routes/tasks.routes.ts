@@ -1,125 +1,73 @@
 import { Router } from 'express'
-import { prisma } from '../lib/prisma'
-import { z } from 'zod'
+import { ensureAuthenticated } from '../shared/middlewares/ensureAuthenticated'
+import { CreateTaskController } from '../modules/tasks/useCases/createTasks/CreateTaskController'
+import { EditTaskController } from '../modules/tasks/useCases/editTask/EditTaskController'
+import { ListAllOpenedTasksController } from '../modules/tasks/useCases/listAllTasksByUserId/ListOpenedTaskController'
+import { ListOpenedTasksByProjectIdController } from '../modules/tasks/useCases/listOpenedTasksByProjectId/ListOpenedTasksByProjectIdController'
+import { DeleteOpenedTasksByIdController } from '../modules/tasks/useCases/deleteOpenedTaskById/DeleteOpenedTaskByIdController'
+import { DeleteConcludedTasksByIdController } from '../modules/tasks/useCases/deleteConcludedTaskById/DeleteConcludedTaskByIdController'
+import { ConcludeTaskByIdController } from '../modules/tasks/useCases/concludeTaskById/ConcludeTaskByIdController'
+import { ListConcludedTasksByProjectIdController } from '../modules/tasks/useCases/listConcludedTaskByProjectId/ListConcludedTasksByProjectIdController'
 
 const taskRoutes = Router()
 
-taskRoutes.get('/get-all-tasks', async (req, res) => {
-  try {
-    const tasks = await prisma.task.findMany()
+const createTaskController = new CreateTaskController()
+const listOpenedTasksByUserIdController = new ListAllOpenedTasksController()
+const listOpenedTasksByProjectIdController =
+  new ListOpenedTasksByProjectIdController()
+const listConcludedTasksByProjectIdController =
+  new ListConcludedTasksByProjectIdController()
+const editTasController = new EditTaskController()
+const deleteOpenedTaskById = new DeleteOpenedTasksByIdController()
+const deleteConcludedTaskById = new DeleteConcludedTasksByIdController()
+const concludeTaskByIdController = new ConcludeTaskByIdController()
 
-    return res.send(tasks)
-  } catch (err) {
-    console.log('Error in /get-all-tasks')
-  }
-})
+taskRoutes.post(
+  '/create-task',
+  ensureAuthenticated,
+  createTaskController.handle,
+)
 
-taskRoutes.get('/get-tasks-by-status/:taskStatus', async (req, res) => {
-  const { taskStatus } = req.params
+taskRoutes.get(
+  '/list-all-opened-tasks-by-user-id',
+  ensureAuthenticated,
+  listOpenedTasksByUserIdController.handle,
+)
 
-  try {
-    const tasks = await prisma.task.findMany({
-      where: {
-        status: taskStatus,
-      },
-    })
+taskRoutes.get(
+  '/list-opened-tasks-by-project-id/:projectId',
+  ensureAuthenticated,
+  listOpenedTasksByProjectIdController.handle,
+)
 
-    return res.send(tasks)
-  } catch (err) {
-    console.log('Error in /get-tasks-by-status', err)
-    res.status(500).send({
-      error: 'Internal Server Error',
-    })
-  }
-})
+taskRoutes.get(
+  '/list-concluded-tasks-by-project-id/:projectId',
+  ensureAuthenticated,
+  listConcludedTasksByProjectIdController.handle,
+)
 
-taskRoutes.post('/create-new-task', async (req, res) => {
-  const createTaskSchema = z.object({
-    createdAt: z.string(),
-    maturity: z.string(),
-    title: z.string(),
-    status: z.string(),
-    priority: z.string(),
-    description: z.string(),
-    userId: z.string(),
-  })
+taskRoutes.put(
+  '/edit-task-by-id',
+  ensureAuthenticated,
+  editTasController.handle,
+)
 
-  const { createdAt, maturity, title, status, priority, description, userId } =
-    createTaskSchema.parse(req.body)
+taskRoutes.delete(
+  '/delete-opened-task-by-id/:taskId',
+  ensureAuthenticated,
+  deleteOpenedTaskById.handle,
+)
 
-  try {
-    await prisma.task.create({
-      data: {
-        createdAt,
-        maturity,
-        title,
-        status,
-        priority,
-        description,
-        userId,
-      },
-    })
-  } catch (err) {
-    console.log('Error in /create-new-task', err)
-  }
+taskRoutes.delete(
+  '/delete-concluded-task-by-id/:taskId',
+  ensureAuthenticated,
+  deleteConcludedTaskById.handle,
+)
 
-  return res.status(201).send()
-})
-
-taskRoutes.put('/update-task-by-id/:taskId', async (req, res) => {
-  const reqParamsSchema = z.object({
-    taskId: z.string(),
-  })
-
-  const reqBodyParams = z.object({
-    maturity: z.string(),
-    title: z.string(),
-    status: z.string(),
-    priority: z.string(),
-    description: z.string(),
-  })
-
-  const { taskId } = reqParamsSchema.parse(req.params)
-
-  const { description, maturity, priority, status, title } =
-    reqBodyParams.parse(req.body)
-
-  try {
-    await prisma.task.update({
-      where: {
-        id: taskId,
-      },
-      data: { description, maturity, priority, status, title },
-    })
-
-    return res.status(200).json({ message: 'Tarefa atualizada com sucesso' })
-  } catch (err) {
-    console.log(err)
-    return res.status(400).json({ error: 'Erro na atualização da tarefa', err })
-  }
-})
-
-taskRoutes.delete('/delete-task-by-id/:taskId', async (req, res) => {
-  const deleteTaskParams = z.object({
-    taskId: z.string(),
-  })
-
-  const { taskId } = deleteTaskParams.parse(req.params)
-
-  try {
-    const deleteTask = await prisma.task.delete({
-      where: {
-        id: taskId,
-      },
-    })
-
-    return res.send(deleteTask)
-  } catch (err) {
-    console.log('Error in /delete-task-by-id', err)
-    res.status(500).send({
-      error: 'Internal Server Error',
-    })
-  }
-})
+taskRoutes.post(
+  '/conclude-task-by-id',
+  ensureAuthenticated,
+  concludeTaskByIdController.handle,
+)
 
 export { taskRoutes }
