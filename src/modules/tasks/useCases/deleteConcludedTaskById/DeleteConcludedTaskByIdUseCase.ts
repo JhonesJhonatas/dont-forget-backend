@@ -10,7 +10,8 @@ class DeleteConcludedTaskByIdUseCase {
   ) {}
 
   async execute(taskId: string, userId: string) {
-    const tasksList = await this.tasksRepository.findOpenedTasksByUserId(userId)
+    const tasksList =
+      await this.tasksRepository.findConcludedTasksByUserId(userId)
 
     const taskExists = tasksList.some((task) => task.id === taskId)
 

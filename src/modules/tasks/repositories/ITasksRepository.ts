@@ -17,6 +17,8 @@ interface ITasksRepository {
 
   findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]>
 
+  findConcludedTasksByUserId(userId: string): Promise<OpenedTasks[]>
+
   editTaskById({
     description,
     maturity,
