@@ -5,7 +5,7 @@ interface ICreateTaskDTO {
   status: string
   maturity: Date
   projectId: string
-  userId?: string
+  userId: string
 }
 
 export { ICreateTaskDTO }

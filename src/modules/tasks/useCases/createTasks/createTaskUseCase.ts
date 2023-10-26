@@ -56,6 +56,7 @@ class CreateTaskUseCase {
       projectId,
       status,
       title,
+      userId,
     })
 
     return task

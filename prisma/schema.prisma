@@ -42,6 +42,7 @@ model OpenedTasks {
   createdAt   DateTime @default(now())
   project     Project  @relation(fields: [projectId], references: [id])
   projectId   String
+  userId      String
 }
 
 model ConcludedTasks {
@@ -55,4 +56,5 @@ model ConcludedTasks {
   completedAt DateTime
   project     Project  @relation(fields: [projectId], references: [id])
   projectId   String
+  userId      String
 }

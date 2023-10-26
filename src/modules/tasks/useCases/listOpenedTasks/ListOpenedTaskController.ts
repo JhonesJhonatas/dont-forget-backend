@@ -1,18 +1,17 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { ListOpenedTasksUseCase } from './listOpenedTasksUseCase'
+import { ListAllOpenedTasksUseCase } from './ListAllOpenedTasksUseCase'
 
-class ListOpenedTasksController {
+class ListAllOpenedTasksController {
   async handle(request: Request, response: Response) {
     const { projectId } = request.params
-    const { id: userId } = request.user
 
-    const listOpenedTasks = container.resolve(ListOpenedTasksUseCase)
+    const listOpenedTasks = container.resolve(ListAllOpenedTasksUseCase)
 
-    const openedTasks = await listOpenedTasks.execute(projectId, userId)
+    const openedTasks = await listOpenedTasks.execute(projectId)
 
-    return response.json(openedTasks)
+    return response.status(200).json(openedTasks)
   }
 }
 
-export { ListOpenedTasksController }
+export { ListAllOpenedTasksController }

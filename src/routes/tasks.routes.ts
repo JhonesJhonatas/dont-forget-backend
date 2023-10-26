@@ -1,13 +1,13 @@
 import { Router } from 'express'
 import { ensureAuthenticated } from '../shared/middlewares/ensureAuthenticated'
-import { ListOpenedTasksController } from '../modules/tasks/useCases/listOpenedTasks/ListOpenedTaskController'
 import { CreateTaskController } from '../modules/tasks/useCases/createTasks/CreateTaskController'
 import { EditTaskController } from '../modules/tasks/useCases/editTask/EditTaskController'
+import { ListAllOpenedTasksController } from '../modules/tasks/useCases/listOpenedTasks/ListOpenedTaskController'
 
 const taskRoutes = Router()
 
 const createTaskController = new CreateTaskController()
-const listOpenedTasksController = new ListOpenedTasksController()
+const listOpenedTasksController = new ListAllOpenedTasksController()
 const editTasController = new EditTaskController()
 
 taskRoutes.post(
@@ -17,7 +17,7 @@ taskRoutes.post(
 )
 
 taskRoutes.get(
-  '/list-opened-tasks/:projectId',
+  '/list-all-opened-tasks',
   ensureAuthenticated,
   listOpenedTasksController.handle,
 )

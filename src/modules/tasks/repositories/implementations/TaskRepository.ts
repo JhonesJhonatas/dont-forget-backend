@@ -12,6 +12,7 @@ class TaskRepository implements ITasksRepository {
     projectId,
     status,
     title,
+    userId,
   }: ICreateTaskDTO): Promise<OpenedTasks> {
     const task = await prismaClient.openedTasks.create({
       data: {
@@ -21,6 +22,7 @@ class TaskRepository implements ITasksRepository {
         status,
         title,
         projectId,
+        userId,
       },
     })
 
@@ -31,6 +33,16 @@ class TaskRepository implements ITasksRepository {
     const tasks = await prismaClient.openedTasks.findMany({
       where: {
         projectId,
+      },
+    })
+
+    return tasks
+  }
+
+  async findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]> {
+    const tasks = await prismaClient.openedTasks.findMany({
+      where: {
+        userId,
       },
     })
 
