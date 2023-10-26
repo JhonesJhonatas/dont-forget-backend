@@ -6,6 +6,7 @@ import { ListAllOpenedTasksController } from '../modules/tasks/useCases/listAllT
 import { ListOpenedTasksByProjectIdController } from '../modules/tasks/useCases/listOpenedTasksByProjectId/ListOpenedTasksByProjectIdController'
 import { DeleteOpenedTasksByIdController } from '../modules/tasks/useCases/deleteOpenedTaskById/DeleteOpenedTaskByIdController'
 import { DeleteConcludedTasksByIdController } from '../modules/tasks/useCases/deleteConcludedTaskById/DeleteConcludedTaskByIdController'
+import { ConcludeTaskByIdController } from '../modules/tasks/useCases/concludeTaskById/ConcludeTaskByIdController'
 
 const taskRoutes = Router()
 
@@ -16,6 +17,7 @@ const listOpenedTasksByProjectIdController =
 const editTasController = new EditTaskController()
 const deleteOpenedTaskById = new DeleteOpenedTasksByIdController()
 const deleteConcludedTaskById = new DeleteConcludedTasksByIdController()
+const concludeTaskByIdController = new ConcludeTaskByIdController()
 
 taskRoutes.post(
   '/create-task',
@@ -51,6 +53,12 @@ taskRoutes.delete(
   '/delete-concluded-task-by-id/:taskId',
   ensureAuthenticated,
   deleteConcludedTaskById.handle,
+)
+
+taskRoutes.post(
+  '/conclude-task-by-id',
+  ensureAuthenticated,
+  concludeTaskByIdController.handle,
 )
 
 export { taskRoutes }

@@ -52,8 +52,8 @@ model ConcludedTasks {
   priority    String
   status      String
   maturity    DateTime
-  createdAt   DateTime @default(now())
-  completedAt DateTime
+  createdAt   DateTime
+  completedAt DateTime @default(now())
   project     Project  @relation(fields: [projectId], references: [id])
   projectId   String
   userId      String

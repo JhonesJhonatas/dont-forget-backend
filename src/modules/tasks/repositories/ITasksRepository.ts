@@ -1,6 +1,7 @@
-import { OpenedTasks } from '@prisma/client'
+import { ConcludedTasks, OpenedTasks } from '@prisma/client'
 import { ICreateTaskDTO } from '../dtos/ICreateTaskDTO'
 import { IEditTaskDTO } from '../dtos/IEditTaskDTO'
+import { ICreateConcludedTaskDTO } from '../../projects/dtos/ICreatedConcludedTaskDTO'
 
 interface ITasksRepository {
   create({
@@ -29,6 +30,17 @@ interface ITasksRepository {
   deleteOpenedTaskById(taskId: string): Promise<OpenedTasks>
 
   deleteConcludedTaskById(taskId: string): Promise<OpenedTasks>
+
+  createConcludedTask({
+    createdAt,
+    description,
+    maturity,
+    priority,
+    projectId,
+    status,
+    title,
+    userId,
+  }: ICreateConcludedTaskDTO): Promise<ConcludedTasks>
 }
 
 export { ITasksRepository }
