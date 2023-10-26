@@ -7,6 +7,7 @@ import { ListOpenedTasksByProjectIdController } from '../modules/tasks/useCases/
 import { DeleteOpenedTasksByIdController } from '../modules/tasks/useCases/deleteOpenedTaskById/DeleteOpenedTaskByIdController'
 import { DeleteConcludedTasksByIdController } from '../modules/tasks/useCases/deleteConcludedTaskById/DeleteConcludedTaskByIdController'
 import { ConcludeTaskByIdController } from '../modules/tasks/useCases/concludeTaskById/ConcludeTaskByIdController'
+import { ListConcludedTasksByProjectIdController } from '../modules/tasks/useCases/listConcludedTaskByProjectId/ListConcludedTasksByProjectIdController'
 
 const taskRoutes = Router()
 
@@ -14,6 +15,8 @@ const createTaskController = new CreateTaskController()
 const listOpenedTasksByUserIdController = new ListAllOpenedTasksController()
 const listOpenedTasksByProjectIdController =
   new ListOpenedTasksByProjectIdController()
+const listConcludedTasksByProjectIdController =
+  new ListConcludedTasksByProjectIdController()
 const editTasController = new EditTaskController()
 const deleteOpenedTaskById = new DeleteOpenedTasksByIdController()
 const deleteConcludedTaskById = new DeleteConcludedTasksByIdController()
@@ -35,6 +38,12 @@ taskRoutes.get(
   '/list-opened-tasks-by-project-id/:projectId',
   ensureAuthenticated,
   listOpenedTasksByProjectIdController.handle,
+)
+
+taskRoutes.get(
+  '/list-concluded-tasks-by-project-id/:projectId',
+  ensureAuthenticated,
+  listConcludedTasksByProjectIdController.handle,
 )
 
 taskRoutes.put(

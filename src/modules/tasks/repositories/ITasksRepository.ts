@@ -17,7 +17,9 @@ interface ITasksRepository {
 
   findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]>
 
-  findConcludedTasksByUserId(userId: string): Promise<OpenedTasks[]>
+  findConcludedTasksByProjectId(projectId: string): Promise<ConcludedTasks[]>
+
+  findConcludedTasksByUserId(userId: string): Promise<ConcludedTasks[]>
 
   editTaskById({
     description,
@@ -31,7 +33,7 @@ interface ITasksRepository {
 
   deleteOpenedTaskById(taskId: string): Promise<OpenedTasks>
 
-  deleteConcludedTaskById(taskId: string): Promise<OpenedTasks>
+  deleteConcludedTaskById(taskId: string): Promise<ConcludedTasks>
 
   createConcludedTask({
     createdAt,

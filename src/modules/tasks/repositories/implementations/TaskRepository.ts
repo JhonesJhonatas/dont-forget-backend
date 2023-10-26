@@ -50,7 +50,19 @@ class TaskRepository implements ITasksRepository {
     return tasks
   }
 
-  async findConcludedTasksByUserId(userId: string): Promise<OpenedTasks[]> {
+  async findConcludedTasksByProjectId(
+    projectId: string,
+  ): Promise<ConcludedTasks[]> {
+    const tasks = await prismaClient.concludedTasks.findMany({
+      where: {
+        projectId,
+      },
+    })
+
+    return tasks
+  }
+
+  async findConcludedTasksByUserId(userId: string): Promise<ConcludedTasks[]> {
     const tasks = await prismaClient.concludedTasks.findMany({
       where: {
         userId,
@@ -97,7 +109,7 @@ class TaskRepository implements ITasksRepository {
     return deletedTask
   }
 
-  async deleteConcludedTaskById(taskId: string): Promise<OpenedTasks> {
+  async deleteConcludedTaskById(taskId: string): Promise<ConcludedTasks> {
     const deletedTask = await prismaClient.concludedTasks.delete({
       where: {
         id: taskId,
