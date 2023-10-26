@@ -12,6 +12,7 @@ class ConcludeTaskByIdController {
       projectId,
       title,
       status,
+      taskId,
     } = request.body
     const { id: userId } = request.user
 
@@ -26,6 +27,7 @@ class ConcludeTaskByIdController {
       title,
       userId,
       status,
+      taskId,
     })
 
     return response.status(201).json(concludedTask)

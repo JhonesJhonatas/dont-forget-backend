@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe'
 import { ITasksRepository } from '../../repositories/ITasksRepository'
-import { ICreateConcludedTaskDTO } from '../../../projects/dtos/ICreatedConcludedTaskDTO'
 import { IProjectsRepository } from '../../../projects/repositories/IProjectsRepository'
 import { Project } from '@prisma/client'
 import { AppError } from '../../../../errors/AppError'
+import { ICreateConcludedTaskParamsDTO } from '../../../projects/dtos/ICreatedConcludedTaskParamsDTO'
 
 @injectable()
 class ConcludeTaskByIdUseCase {
@@ -24,7 +24,8 @@ class ConcludeTaskByIdUseCase {
     title,
     userId,
     status,
-  }: ICreateConcludedTaskDTO) {
+    taskId,
+  }: ICreateConcludedTaskParamsDTO) {
     const listOfProjects: Project[] = []
 
     if (userId) {
@@ -60,6 +61,10 @@ class ConcludeTaskByIdUseCase {
       userId,
       status,
     })
+
+    if (task) {
+      await this.tasksRepository.deleteOpenedTaskById(taskId)
+    }
 
     return task
   }
