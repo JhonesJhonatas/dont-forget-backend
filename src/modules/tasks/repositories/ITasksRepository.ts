@@ -25,6 +25,10 @@ interface ITasksRepository {
     title,
     id,
   }: IEditTaskDTO): Promise<OpenedTasks>
+
+  deleteOpenedTaskById(taskId: string): Promise<OpenedTasks>
+
+  deleteConcludedTaskById(taskId: string): Promise<OpenedTasks>
 }
 
 export { ITasksRepository }

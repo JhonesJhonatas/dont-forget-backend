@@ -75,6 +75,26 @@ class TaskRepository implements ITasksRepository {
 
     return task
   }
+
+  async deleteOpenedTaskById(taskId: string): Promise<OpenedTasks> {
+    const deletedTask = await prismaClient.openedTasks.delete({
+      where: {
+        id: taskId,
+      },
+    })
+
+    return deletedTask
+  }
+
+  async deleteConcludedTaskById(taskId: string): Promise<OpenedTasks> {
+    const deletedTask = await prismaClient.openedTasks.delete({
+      where: {
+        id: taskId,
+      },
+    })
+
+    return deletedTask
+  }
 }
 
 export { TaskRepository }
