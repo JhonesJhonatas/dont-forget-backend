@@ -4,11 +4,11 @@ import { ListAllOpenedTasksUseCase } from './ListAllOpenedTasksUseCase'
 
 class ListAllOpenedTasksController {
   async handle(request: Request, response: Response) {
-    const { projectId } = request.params
+    const { id: userId } = request.user
 
     const listOpenedTasks = container.resolve(ListAllOpenedTasksUseCase)
 
-    const openedTasks = await listOpenedTasks.execute(projectId)
+    const openedTasks = await listOpenedTasks.execute(userId)
 
     return response.status(200).json(openedTasks)
   }
