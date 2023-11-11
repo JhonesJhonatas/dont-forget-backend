@@ -4,11 +4,13 @@ import { CreateProjectController } from '../modules/projects/useCases/createProj
 import { ListProjectsController } from '../modules/projects/useCases/listProjects/ListProjectsController'
 import { EditProjectController } from '../modules/projects/useCases/editProject/EditProjectController'
 import { DeleteProjectController } from '../modules/projects/useCases/deleteProject/DeleteProjectController'
+import { GetProjectByIdController } from '../modules/projects/useCases/getProjectById/GetProjectByIdController'
 
 const projectRoutes = Router()
 
 const createProjectController = new CreateProjectController()
 const listProjectsController = new ListProjectsController()
+const getProjectByIdController = new GetProjectByIdController()
 const editProjectController = new EditProjectController()
 const deleteProjectController = new DeleteProjectController()
 
@@ -22,6 +24,12 @@ projectRoutes.get(
   '/list-projects',
   ensureAuthenticated,
   listProjectsController.handle,
+)
+
+projectRoutes.get(
+  '/get-project-by-id/:projectId',
+  ensureAuthenticated,
+  getProjectByIdController.handle,
 )
 
 projectRoutes.put(

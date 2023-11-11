@@ -3,12 +3,16 @@ import { hash } from 'bcrypt'
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO'
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 import { AppError } from '../../../../errors/AppError'
+import { IProjectsRepository } from '../../../projects/repositories/IProjectsRepository'
 
 @injectable()
 class CreateUserUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('ProjectsRepository')
+    private projectsRepository: IProjectsRepository,
   ) {}
 
   async execute({ email, name, password, role }: ICreateUserDTO) {
@@ -26,6 +30,15 @@ class CreateUserUseCase {
       password: passwordHash,
       role,
     })
+
+    if (user) {
+      await this.projectsRepository.create({
+        color: '#3b82f6',
+        description: '',
+        title: 'Geral',
+        userId: user.id,
+      })
+    }
 
     return user
   }

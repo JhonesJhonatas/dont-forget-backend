@@ -33,6 +33,16 @@ class ProjectsRepository implements IProjectsRepository {
     return projects
   }
 
+  async getProjectById(projectId: string): Promise<Project> {
+    const project = (await prismaClient.project.findUnique({
+      where: {
+        id: projectId,
+      },
+    })) as Project
+
+    return project
+  }
+
   async editProject({
     id,
     title,

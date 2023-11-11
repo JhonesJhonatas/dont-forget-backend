@@ -5,13 +5,14 @@ import { IEditProjectDTO } from '../dtos/IEditProjectDTO'
 interface IProjectsRepository {
   create({
     color,
-    createdAt,
     description,
     title,
     userId,
   }: ICreatedProjectDTO): Promise<Project>
 
   listProjects(userId: string): Promise<Project[]>
+
+  getProjectById(projectId: string): Promise<Project>
 
   editProject({
     id,
