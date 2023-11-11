@@ -16,7 +16,7 @@ CREATE TABLE "Project" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "color" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
@@ -30,8 +30,9 @@ CREATE TABLE "OpenedTasks" (
     "priority" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "maturity" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "projectId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "OpenedTasks_pkey" PRIMARY KEY ("id")
 );
@@ -45,8 +46,9 @@ CREATE TABLE "ConcludedTasks" (
     "status" TEXT NOT NULL,
     "maturity" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL,
-    "completedAt" TIMESTAMP(3) NOT NULL,
+    "completedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "projectId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "ConcludedTasks_pkey" PRIMARY KEY ("id")
 );
