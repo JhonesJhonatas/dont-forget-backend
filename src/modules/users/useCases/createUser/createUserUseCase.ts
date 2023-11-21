@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe'
 import { hash } from 'bcrypt'
-import { ICreateUserDTO } from '../../dtos/ICreateUserDTO'
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 import { AppError } from '../../../../errors/AppError'
 import { IProjectsRepository } from '../../../projects/repositories/IProjectsRepository'
+import { ICreateUserWithProject } from '../../dtos/ICreateUserWithProject'
 
 @injectable()
 class CreateUserUseCase {
@@ -15,7 +15,15 @@ class CreateUserUseCase {
     private projectsRepository: IProjectsRepository,
   ) {}
 
-  async execute({ email, name, password, role }: ICreateUserDTO) {
+  async execute({
+    email,
+    name,
+    password,
+    role,
+    title,
+    description,
+    color,
+  }: ICreateUserWithProject) {
     const userAlreadyExists = await this.usersRepository.findByEmail(email)
 
     if (userAlreadyExists) {
@@ -33,9 +41,9 @@ class CreateUserUseCase {
 
     if (user) {
       await this.projectsRepository.create({
-        color: '#3b82f6',
-        description: '',
-        title: 'Geral',
+        color,
+        description,
+        title,
         userId: user.id,
       })
     }

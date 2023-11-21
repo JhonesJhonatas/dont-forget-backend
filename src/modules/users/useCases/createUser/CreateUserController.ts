@@ -4,7 +4,8 @@ import { CreateUserUseCase } from './createUserUseCase'
 
 class CreateUserController {
   async handle(request: Request, response: Response) {
-    const { name, email, password, role } = request.body
+    const { name, email, password, role, title, description, color } =
+      request.body
 
     const createUserUseCase = container.resolve(CreateUserUseCase)
 
@@ -13,6 +14,9 @@ class CreateUserController {
       name,
       password,
       role,
+      title,
+      description,
+      color,
     })
 
     return response.status(201).json(user)
