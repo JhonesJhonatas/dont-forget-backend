@@ -15,6 +15,7 @@ model User {
   name      String
   email     String
   role      String
+  birthDate DateTime
   password  String
   create_at DateTime  @default(now())
   Project   Project[]
