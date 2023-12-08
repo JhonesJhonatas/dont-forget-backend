@@ -3,9 +3,10 @@ interface ICreateUserWithProject {
   email: string
   role: string
   password: string
-  title: string
-  description: string
-  color: string
+  birthDate: Date
+  projectName: string
+  projectColor: string
+  projectDescription: string
 }
 
 export { ICreateUserWithProject }

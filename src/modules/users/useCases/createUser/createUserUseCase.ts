@@ -16,13 +16,14 @@ class CreateUserUseCase {
   ) {}
 
   async execute({
-    email,
     name,
-    password,
+    email,
     role,
-    title,
-    description,
-    color,
+    birthDate,
+    password,
+    projectName,
+    projectColor,
+    projectDescription,
   }: ICreateUserWithProject) {
     const userAlreadyExists = await this.usersRepository.findByEmail(email)
 
@@ -35,15 +36,16 @@ class CreateUserUseCase {
     const user = await this.usersRepository.create({
       name,
       email,
+      birthDate,
       password: passwordHash,
       role,
     })
 
     if (user) {
       await this.projectsRepository.create({
-        color,
-        description,
-        title,
+        color: projectColor,
+        description: projectDescription,
+        title: projectName,
         userId: user.id,
       })
     }
