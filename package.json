@@ -5,7 +5,6 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx src/server.ts",
-    "vercel-build": "npx prisma migrate deploy",
     "start": "tsx src/server.ts",
     "migrate:run": "npx prisma migrate dev"
   },
