@@ -9,6 +9,7 @@ import { DeleteConcludedTasksByIdController } from '../modules/tasks/useCases/de
 import { ConcludeTaskByIdController } from '../modules/tasks/useCases/concludeTaskById/ConcludeTaskByIdController'
 import { ListConcludedTasksByProjectIdController } from '../modules/tasks/useCases/listConcludedTaskByProjectId/ListConcludedTasksByProjectIdController'
 import { ListAllConcludedTasksByUserIdController } from '../modules/tasks/useCases/listAllConcludedTasksByUserId/ListAllConcludedTasksByUserIdController'
+import { UndoCompletedTaskByIdController } from '../modules/tasks/useCases/undoCompletedTaskByProjectId/UndoCompletedTaskByIdController'
 
 const taskRoutes = Router()
 
@@ -24,6 +25,7 @@ const editTasController = new EditTaskController()
 const deleteOpenedTaskById = new DeleteOpenedTasksByIdController()
 const deleteConcludedTaskById = new DeleteConcludedTasksByIdController()
 const concludeTaskByIdController = new ConcludeTaskByIdController()
+const undoCompledTaskByIdController = new UndoCompletedTaskByIdController()
 
 taskRoutes.post(
   '/create-task',
@@ -77,6 +79,12 @@ taskRoutes.post(
   '/conclude-task-by-id',
   ensureAuthenticated,
   concludeTaskByIdController.handle,
+)
+
+taskRoutes.post(
+  '/undo-concluded-task-by-id',
+  ensureAuthenticated,
+  undoCompledTaskByIdController.handle,
 )
 
 export { taskRoutes }
