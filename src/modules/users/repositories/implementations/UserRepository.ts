@@ -2,6 +2,7 @@ import { User } from '@prisma/client'
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO'
 import { IUsersRepository } from '../IUsersRepository'
 import { prismaClient } from '../../../../prisma'
+import { IEditUserDTO } from '../../dtos/IEditUserDTO'
 
 class UserRepository implements IUsersRepository {
   async create({
@@ -38,6 +39,21 @@ class UserRepository implements IUsersRepository {
     })
 
     return user as User
+  }
+
+  async edit({
+    id,
+    name,
+    email,
+    role,
+    birthDate,
+  }: IEditUserDTO): Promise<User> {
+    const user = await prismaClient.user.update({
+      where: { id },
+      data: { name, email, role, birthDate },
+    })
+
+    return user
   }
 }
 
