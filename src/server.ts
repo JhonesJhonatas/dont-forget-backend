@@ -6,9 +6,11 @@ import 'express-async-errors'
 import cors from 'cors'
 import { routes } from './routes'
 import { AppError } from './errors/AppError'
+import mongoose from 'mongoose'
 
 const app = express()
 const port = process.env.PORT || 80
+mongoose.connect('mongodb://localhost:27017/local')
 
 app.use(express.json())
 
