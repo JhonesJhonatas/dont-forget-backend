@@ -6,9 +6,12 @@ import 'express-async-errors'
 import cors from 'cors'
 import { routes } from './routes'
 import { AppError } from './errors/AppError'
+import { mongoClient } from './mongo/mongoClient'
 
 const app = express()
 const port = process.env.PORT || 80
+
+mongoClient.connect()
 
 app.use(express.json())
 
