@@ -1,12 +1,12 @@
 import { inject, injectable } from 'tsyringe'
-import { IUsersRepository } from '../../repositories/IUsersRepository'
 import { ICreateNotificationDTO } from '../../dtos/ICreateNotificationDTO'
+import { INotificationsRepository } from '../../repositories/INotificationsRepository'
 
 @injectable()
 class CreateNotificationUseCase {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('NotificationsRepository')
+    private notificationsRepository: INotificationsRepository,
   ) {}
 
   async execute({
@@ -19,7 +19,7 @@ class CreateNotificationUseCase {
     const notificationBody = { userId, type, title, description, read }
 
     const savedNotification =
-      await this.usersRepository.createNotification(notificationBody)
+      await this.notificationsRepository.create(notificationBody)
 
     return savedNotification
   }

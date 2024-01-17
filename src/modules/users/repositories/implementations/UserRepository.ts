@@ -4,12 +4,6 @@ import { IUsersRepository } from '../IUsersRepository'
 import { prismaClient } from '../../../../prisma'
 import { IEditUserDTO } from '../../dtos/IEditUserDTO'
 import { IEditPasswordDTO } from '../../dtos/IEditPasswordDTO'
-import {
-  GetNotificationsSchema,
-  NotificationSchema,
-} from '../../../../mongo/schemaTypes'
-import { ICreateNotificationDTO } from '../../dtos/ICreateNotificationDTO'
-import { NotificationModel } from '../../../../mongo/mongoModels'
 
 class UserRepository implements IUsersRepository {
   async create({
@@ -30,28 +24,6 @@ class UserRepository implements IUsersRepository {
     })
 
     return user
-  }
-
-  async createNotification({
-    userId,
-    type,
-    title,
-    description,
-    read,
-  }: ICreateNotificationDTO): Promise<NotificationSchema> {
-    const notificationBody = { userId, type, title, description, read }
-
-    const notificationsModel = new NotificationModel(notificationBody)
-
-    const savedNotification = await notificationsModel.save()
-
-    return savedNotification
-  }
-
-  async getNotifications(userId: string): Promise<GetNotificationsSchema[]> {
-    const notifications = await NotificationModel.find({ userId })
-
-    return notifications
   }
 
   async findByEmail(email: string): Promise<User> {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { CreateNotificationUseCase } from './createNotificationUseCase'
 import { container } from 'tsyringe'
+import { CreateNotificationUseCase } from './createNotificationUseCase'
 
 class CreateNotificationController {
   async handle(request: Request, response: Response) {
