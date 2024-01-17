@@ -1,3 +1,4 @@
+import { AppError } from '../../../../errors/AppError'
 import { NotificationModel } from '../../../../mongo/mongoModels'
 import {
   GetNotificationsSchema,
@@ -27,6 +28,16 @@ class NotificationsRepository implements INotificationsRepository {
     const notifications = await NotificationModel.find({ userId })
 
     return notifications
+  }
+
+  async delete(id: string): Promise<void> {
+    try {
+      await NotificationModel.deleteOne({
+        _id: id,
+      })
+    } catch (err) {
+      throw new AppError('Notification Not Found', 404)
+    }
   }
 }
 
