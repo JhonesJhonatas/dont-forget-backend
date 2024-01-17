@@ -15,6 +15,7 @@ const editUserController = new EditUserController()
 const editPasswordController = new EditPasswordController()
 
 userRoutes.post('/create-user', createUserController.handle)
+
 userRoutes.get(
   '/get-user-data',
   ensureAuthenticated,
