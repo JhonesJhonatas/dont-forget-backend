@@ -4,7 +4,7 @@ import { DeleteNotificationUseCase } from './deleteNotificationUseCase'
 
 class DeleteNotificationController {
   async handle(request: Request, response: Response) {
-    const { id } = request.body
+    const { id } = request.params
 
     const deleteNotificationUseCase = container.resolve(
       DeleteNotificationUseCase,

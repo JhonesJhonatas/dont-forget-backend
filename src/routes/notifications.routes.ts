@@ -23,7 +23,7 @@ notificationsRoutes.get(
 )
 
 notificationsRoutes.delete(
-  '/delete-notification',
+  '/delete-notification/:id',
   ensureAuthenticated,
   deleteNotificationController.handle,
 )
