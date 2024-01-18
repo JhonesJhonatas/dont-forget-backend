@@ -13,6 +13,8 @@ interface ITasksRepository {
     title,
   }: ICreateTaskDTO): Promise<OpenedTasks>
 
+  getAllTasks(): Promise<OpenedTasks[]>
+
   findOpenedTasksByProjectId(projectId: string): Promise<OpenedTasks[]>
 
   findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]>

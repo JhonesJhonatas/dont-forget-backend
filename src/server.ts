@@ -7,6 +7,7 @@ import cors from 'cors'
 import { routes } from './routes'
 import { AppError } from './errors/AppError'
 import { mongoClient } from './mongo/mongoClient'
+import './shared/jobs'
 
 const app = express()
 const port = process.env.PORT || 80
