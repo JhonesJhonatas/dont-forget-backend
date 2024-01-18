@@ -30,6 +30,12 @@ class TaskRepository implements ITasksRepository {
     return task
   }
 
+  async getAllTasks(): Promise<OpenedTasks[]> {
+    const allTasks = await prismaClient.openedTasks.findMany()
+
+    return allTasks
+  }
+
   async findOpenedTasksByProjectId(projectId: string): Promise<OpenedTasks[]> {
     const tasks = await prismaClient.openedTasks.findMany({
       where: {
