@@ -16,7 +16,12 @@ mongoClient.connect()
 
 app.use(express.json())
 
-app.use(cors())
+const corsOptions = {
+  origin: 'https://dont-forget-web.vercel.app',
+  optionsSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions))
 
 app.use(routes)
 
