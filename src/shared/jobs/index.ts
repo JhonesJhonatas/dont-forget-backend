@@ -10,7 +10,7 @@ nodeCron.schedule(
   '9 3 * * *',
   () => {
     notificationJobs.GenerateNotificationForLateTasks()
-    console.log('JOBGenerateNotificationForLateTasks')
+    console.log('JOBGenerateNotificationForLateTasks ⚙️')
   },
   {
     scheduled: true,
