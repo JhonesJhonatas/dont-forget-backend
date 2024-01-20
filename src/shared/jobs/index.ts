@@ -4,6 +4,15 @@ import { container } from 'tsyringe'
 
 const notificationJobs = container.resolve(NotificationJobs)
 
-nodeCron.schedule('1 0 * * *', () => {
-  notificationJobs.GenerateNotificationForLateTasks()
-})
+const brazilTimeZone = 'America/Sao_Paulo'
+
+nodeCron.schedule(
+  '1 0 * * *',
+  () => {
+    notificationJobs.GenerateNotificationForLateTasks()
+  },
+  {
+    scheduled: true,
+    timezone: brazilTimeZone,
+  },
+)

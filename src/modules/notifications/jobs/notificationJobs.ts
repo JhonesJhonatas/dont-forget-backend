@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe'
 import { INotificationsRepository } from '../repositories/INotificationsRepository'
 import { IUsersRepository } from '../../users/repositories/IUsersRepository'
 import { ITasksRepository } from '../../tasks/repositories/ITasksRepository'
-import { format, isAfter, parseISO } from 'date-fns'
+import { format, isAfter } from 'date-fns'
 
 @injectable()
 class NotificationJobs {
