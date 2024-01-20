@@ -5,12 +5,14 @@ import { EditUserController } from '../modules/users/useCases/editUser/EditUserC
 import { ensureAuthenticated } from '../shared/middlewares/ensureAuthenticated'
 import { GetUserDataController } from '../modules/users/useCases/getUserData/GetUserDataController'
 import { EditPasswordController } from '../modules/users/useCases/editPassword/EditPasswordController'
+import { RefreshTokenController } from '../modules/users/useCases/refreshToken/refreshTokenController'
 
 const userRoutes = Router()
 
 const createUserController = new CreateUserController()
 const getUserDataController = new GetUserDataController()
 const authenticateUserController = new AuthenticateUserController()
+const refreshTokenController = new RefreshTokenController()
 const editUserController = new EditUserController()
 const editPasswordController = new EditPasswordController()
 
@@ -22,6 +24,7 @@ userRoutes.get(
   getUserDataController.handle,
 )
 userRoutes.post('/session', authenticateUserController.handle)
+userRoutes.post('/refresh-token', refreshTokenController.handle)
 userRoutes.put('/edit-user', ensureAuthenticated, editUserController.handle)
 userRoutes.put(
   '/edit-password',
