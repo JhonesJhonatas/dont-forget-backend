@@ -24,6 +24,12 @@ class NotificationsRepository implements INotificationsRepository {
     return savedNotification
   }
 
+  async getAllNotifications(): Promise<NotificationSchema[]> {
+    const notifications = await NotificationModel.find()
+
+    return notifications
+  }
+
   async getNotifications(userId: string): Promise<GetNotificationsSchema[]> {
     const notifications = await NotificationModel.find({ userId })
 
