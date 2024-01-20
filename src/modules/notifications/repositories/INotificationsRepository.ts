@@ -11,6 +11,7 @@ interface INotificationsRepository {
     description,
     read,
   }: ICreateNotificationDTO): Promise<NotificationSchema>
+  getAllNotifications(): Promise<NotificationSchema[]>
   getNotifications(userId: string): Promise<GetNotificationsSchema[]>
   delete(id: string): Promise<void>
 }
