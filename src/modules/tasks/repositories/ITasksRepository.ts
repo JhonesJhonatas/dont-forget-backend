@@ -15,6 +15,8 @@ interface ITasksRepository {
 
   getAllTasks(): Promise<OpenedTasks[]>
 
+  findAllLateTasks(date: Date): Promise<OpenedTasks[]>
+
   findOpenedTasksByProjectId(projectId: string): Promise<OpenedTasks[]>
 
   findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]>

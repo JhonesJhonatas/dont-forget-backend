@@ -7,7 +7,7 @@ const notificationJobs = container.resolve(NotificationJobs)
 const brazilTimeZone = 'America/Sao_Paulo'
 
 nodeCron.schedule(
-  '1 0 * * *',
+  '16 18 * * *',
   () => {
     notificationJobs.GenerateNotificationForLateTasks()
     console.log('JOBGenerateNotificationForLateTasks ⚙️')
