@@ -1,15 +1,11 @@
 import { inject, injectable } from 'tsyringe'
 import { INotificationsRepository } from '../repositories/INotificationsRepository'
-import { IUsersRepository } from '../../users/repositories/IUsersRepository'
 import { ITasksRepository } from '../../tasks/repositories/ITasksRepository'
-import { format, isAfter } from 'date-fns'
+import { format } from 'date-fns'
 
 @injectable()
 class NotificationJobs {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
-
     @inject('TasksRepository')
     private tasksRepository: ITasksRepository,
 
@@ -20,18 +16,15 @@ class NotificationJobs {
   public async GenerateNotificationForLateTasks() {
     const todayDate = new Date()
 
-    const [allTasks, allNotifications] = await Promise.all([
-      this.tasksRepository.getAllTasks(),
+    todayDate.setHours(0, 0, 0, 0)
+
+    const [lateTasks, allNotifications] = await Promise.all([
+      this.tasksRepository.findAllLateTasks(todayDate),
       this.notificationsRepository.getAllNotifications(),
     ])
 
-    const lateTasksAndNoNotifications = allTasks.filter((task) => {
-      const formattedTodayDate = format(todayDate, 'yyyy/MM/dd')
-      const fomattedTaskMaturity = format(task.maturity, 'yyyy/MM/dd')
-
-      const thisTaskIsLate = isAfter(formattedTodayDate, fomattedTaskMaturity)
-
-      const thisNotificationAlreadyExists = allNotifications.some(
+    lateTasks.forEach(async (task) => {
+      const alreadyNotificated = allNotifications.some(
         (existingNotification) => {
           return (
             existingNotification.description ===
@@ -43,12 +36,8 @@ class NotificationJobs {
         },
       )
 
-      if (thisNotificationAlreadyExists) return false
+      if (alreadyNotificated) return
 
-      return thisTaskIsLate
-    })
-
-    lateTasksAndNoNotifications.forEach(async (task) => {
       await this.notificationsRepository.create({
         userId: task.userId,
         type: 'warning',
