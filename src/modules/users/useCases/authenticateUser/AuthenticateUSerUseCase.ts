@@ -32,6 +32,15 @@ class AuthenticateUserUseCase {
       throw new AppError('Email or password incorrect!', 401)
     }
 
+    const todayDate = new Date()
+
+    todayDate.setHours(0, 0, 0, 0)
+
+    await this.usersRepository.edit({
+      ...user,
+      lastLogin: todayDate,
+    })
+
     const token = sign({}, '10ie1jihasudhasuhd12312easda', {
       subject: user.id,
       expiresIn: '1d',

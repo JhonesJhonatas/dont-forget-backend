@@ -6,9 +6,9 @@ class RefreshTokenController {
   async handle(request: Request, response: Response) {
     const { currentToken, email } = request.body
 
-    const authenticateUserUseCase = container.resolve(RefreshTokenUseCase)
+    const refreshTokenUserCase = container.resolve(RefreshTokenUseCase)
 
-    const tokenResponse = await authenticateUserUseCase.execute({
+    const tokenResponse = await refreshTokenUserCase.execute({
       currentToken,
       email,
     })
