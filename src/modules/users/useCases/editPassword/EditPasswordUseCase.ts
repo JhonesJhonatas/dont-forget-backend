@@ -22,10 +22,15 @@ class EditPasswordUseCase {
       throw new AppError('Senhas não coincidem')
     }
 
+    const todayDate = new Date()
+
+    todayDate.setHours(0, 0, 0, 0)
+
     const updatedUser = await this.usersRepository.editPassword({
       id,
       oldPassword,
       password: newPasswordHash,
+      updated_at: todayDate,
     })
 
     return updatedUser

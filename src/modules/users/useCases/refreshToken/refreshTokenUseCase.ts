@@ -28,6 +28,19 @@ class RefreshTokenUseCase {
 
     const user = await this.usersRepository.findByEmail(email)
 
+    if (!user) {
+      throw new AppError('User Not Found', 404)
+    }
+
+    const todayDate = new Date()
+
+    todayDate.setHours(0, 0, 0, 0)
+
+    await this.usersRepository.edit({
+      ...user,
+      lastLogin: todayDate,
+    })
+
     const token = sign({}, '10ie1jihasudhasuhd12312easda', {
       subject: user.id,
       expiresIn: '1d',

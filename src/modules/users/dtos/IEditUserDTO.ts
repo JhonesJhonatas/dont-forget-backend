@@ -4,6 +4,8 @@ interface IEditUserDTO {
   email: string
   role: string
   birthDate: Date
+  updated_at?: Date
+  lastLogin?: Date
 }
 
 export { IEditUserDTO }

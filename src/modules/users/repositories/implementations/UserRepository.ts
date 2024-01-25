@@ -32,6 +32,21 @@ class UserRepository implements IUsersRepository {
     return usersList
   }
 
+  async getInactiveUsers(): Promise<User[]> {
+    const twoMonthsAgo = new Date()
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2)
+
+    const inactiveUsers = await prismaClient.user.findMany({
+      where: {
+        lastLogin: {
+          lt: twoMonthsAgo,
+        },
+      },
+    })
+
+    return inactiveUsers
+  }
+
   async findByEmail(email: string): Promise<User> {
     const user = await prismaClient.user.findFirst({
       where: { email },
@@ -54,22 +69,38 @@ class UserRepository implements IUsersRepository {
     email,
     role,
     birthDate,
+    updated_at,
+    lastLogin,
   }: IEditUserDTO): Promise<User> {
     const user = await prismaClient.user.update({
       where: { id },
-      data: { name, email, role, birthDate },
+      data: { name, email, role, birthDate, lastLogin, updated_at },
     })
 
     return user
   }
 
-  async editPassword({ id, password }: IEditPasswordDTO): Promise<User> {
+  async editPassword({
+    id,
+    password,
+    updated_at,
+  }: IEditPasswordDTO): Promise<User> {
     const user = await prismaClient.user.update({
       where: { id },
-      data: { password },
+      data: { password, updated_at },
     })
 
     return user
+  }
+
+  async delete(id: string): Promise<User> {
+    const deletedUser = await prismaClient.user.delete({
+      where: {
+        id,
+      },
+    })
+
+    return deletedUser
   }
 }
 
