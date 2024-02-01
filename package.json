@@ -24,7 +24,7 @@
     "tsx": "^3.13.0"
   },
   "dependencies": {
-    "@prisma/client": "^5.4.2",
+    "@prisma/client": "^5.9.1",
     "@types/cors": "^2.8.15",
     "@types/jsonwebtoken": "^9.0.4",
     "bcrypt": "^5.1.1",

@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
-import { ICreateNotificationDTO } from '../modules/users/dtos/ICreateNotificationDTO'
+import { NotificationSchema } from './types/notificationsTypes'
 
-const notificationSchema = new Schema<ICreateNotificationDTO>({
+const notificationSchema = new Schema<NotificationSchema>({
   userId: { type: String, required: true },
   type: { type: String, required: true },
   title: { type: String, required: true },
@@ -9,7 +9,7 @@ const notificationSchema = new Schema<ICreateNotificationDTO>({
   read: { type: Boolean, required: true },
 })
 
-const NotificationModel = mongoose.model<ICreateNotificationDTO>(
+const NotificationModel = mongoose.model<NotificationSchema>(
   'Notifications',
   notificationSchema,
 )
