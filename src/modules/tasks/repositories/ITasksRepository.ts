@@ -2,6 +2,12 @@ import { ConcludedTasks, OpenedTasks } from '@prisma/client'
 import { ICreateTaskDTO } from '../dtos/ICreateTaskDTO'
 import { IEditTaskDTO } from '../dtos/IEditTaskDTO'
 import { ICreateConcludedTaskDTO } from '../../projects/dtos/ICreatedConcludedTaskDTO'
+import {
+  GetStopWatchSchema,
+  StopWatchSchema,
+} from '../../../mongo/stopWatch/types/stopWatchTypes'
+import { IStartStopWatchDTO } from '../dtos/IStartStopWatchDTO'
+import { IStopStopWatchDTO } from '../dtos/IStopStopWatch'
 
 interface ITasksRepository {
   create({
@@ -34,6 +40,23 @@ interface ITasksRepository {
     title,
     id,
   }: IEditTaskDTO): Promise<OpenedTasks>
+
+  startStopWatch({
+    taskId,
+    startDate,
+    isActive,
+  }: IStartStopWatchDTO): Promise<StopWatchSchema>
+
+  getStopWatchesByTaskId(taskId: string): Promise<GetStopWatchSchema[]>
+
+  stopStopWatch({
+    taskId,
+    startDate,
+    endDate,
+    isActive,
+  }: IStopStopWatchDTO): Promise<StopWatchSchema>
+
+  deleteStopWatch(id: string): Promise<void>
 
   deleteOpenedTaskById(taskId: string): Promise<OpenedTasks>
 

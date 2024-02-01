@@ -1,13 +1,13 @@
 import { Types } from 'mongoose'
 
-export interface SpentTimeSchema {
+export interface StopWatchSchema {
   taskId: string
   startDate: Date
   endDate?: Date
   isActive: boolean
 }
 
-export interface GetSpentTimeSchema {
+export interface GetStopWatchSchema {
   _id: Types.ObjectId
   taskId: string
   startDate: Date
