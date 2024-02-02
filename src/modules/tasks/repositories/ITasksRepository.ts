@@ -49,7 +49,7 @@ interface ITasksRepository {
 
   getStopWatchesByTaskId(taskId: string): Promise<GetStopWatchSchema[]>
 
-  stopStopWatch({
+  editStopWatch({
     taskId,
     startDate,
     endDate,

@@ -145,7 +145,7 @@ class TaskRepository implements ITasksRepository {
     return stopWatches
   }
 
-  async stopStopWatch({
+  async editStopWatch({
     id,
     taskId,
     startDate,
@@ -164,9 +164,9 @@ class TaskRepository implements ITasksRepository {
       },
     )
 
-    const stopedStopWatch = await StopWatchModel.findById(id)
+    const editedStopWatch = await StopWatchModel.findById(id)
 
-    return stopedStopWatch as StopWatchSchema
+    return editedStopWatch as StopWatchSchema
   }
 
   async deleteStopWatch(id: string): Promise<void> {
