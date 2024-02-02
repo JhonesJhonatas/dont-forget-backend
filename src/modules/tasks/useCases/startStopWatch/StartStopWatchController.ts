@@ -4,11 +4,13 @@ import { StartStopWatchUseCase } from './StartStopWatchUseCase'
 
 class StartStopWatchController {
   async handle(request: Request, response: Response) {
+    const { id: userId } = request.user
     const { taskId, startDate, isActive } = request.body
 
     const startStopWatchUseCase = container.resolve(StartStopWatchUseCase)
 
     const stardedStopWatch = await startStopWatchUseCase.execute({
+      userId,
       taskId,
       startDate,
       isActive,
