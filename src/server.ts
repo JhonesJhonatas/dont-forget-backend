@@ -20,7 +20,7 @@ const corsOptions = {
   origin: [
     'https://dont-forget-web.vercel.app',
     'http://127.0.0.1:5173',
-    'https://www.dontforget.com.br/',
+    'https://www.dontforget.com.br',
     'https://dontforget.com.br',
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
