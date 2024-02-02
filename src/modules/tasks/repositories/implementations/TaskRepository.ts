@@ -4,6 +4,14 @@ import { prismaClient } from '../../../../prisma'
 import { ICreateTaskDTO } from '../../dtos/ICreateTaskDTO'
 import { IEditTaskDTO } from '../../dtos/IEditTaskDTO'
 import { ICreateConcludedTaskDTO } from '../../../projects/dtos/ICreatedConcludedTaskDTO'
+import {
+  GetStopWatchSchema,
+  StopWatchSchema,
+} from '../../../../mongo/stopWatch/types/stopWatchTypes'
+import { IStartStopWatchDTO } from '../../dtos/IStartStopWatchDTO'
+import { StopWatchModel } from '../../../../mongo/stopWatch/stopWatchModel'
+import { AppError } from '../../../../errors/AppError'
+import { IStopStopWatchDTO } from '../../dtos/IStopStopWatch'
 
 class TaskRepository implements ITasksRepository {
   async create({
@@ -115,6 +123,60 @@ class TaskRepository implements ITasksRepository {
     })
 
     return updatedTask
+  }
+
+  async startStopWatch({
+    taskId,
+    startDate,
+    isActive,
+  }: IStartStopWatchDTO): Promise<StopWatchSchema> {
+    const stopWatchBody = { taskId, startDate, isActive }
+
+    const stopWatchModel = new StopWatchModel(stopWatchBody)
+
+    const savedStopWatch = await stopWatchModel.save()
+
+    return savedStopWatch
+  }
+
+  async getStopWatchesByTaskId(taskId: string): Promise<GetStopWatchSchema[]> {
+    const stopWatches = await StopWatchModel.find({ taskId })
+
+    return stopWatches
+  }
+
+  async editStopWatch({
+    id,
+    taskId,
+    startDate,
+    endDate,
+    isActive,
+  }: IStopStopWatchDTO): Promise<StopWatchSchema> {
+    await StopWatchModel.updateOne(
+      { _id: id },
+      {
+        $set: {
+          taskId,
+          startDate,
+          endDate,
+          isActive,
+        },
+      },
+    )
+
+    const editedStopWatch = await StopWatchModel.findById(id)
+
+    return editedStopWatch as StopWatchSchema
+  }
+
+  async deleteStopWatch(id: string): Promise<void> {
+    try {
+      await StopWatchModel.deleteOne({
+        _id: id,
+      })
+    } catch (err) {
+      throw new AppError('StopWatch Not Found', 404)
+    }
   }
 
   async deleteOpenedTaskById(taskId: string): Promise<OpenedTasks> {

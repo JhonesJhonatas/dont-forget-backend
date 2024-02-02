@@ -42,6 +42,7 @@ model OpenedTasks {
   description String
   priority    String
   status      String
+  timeSpent   Int?
   maturity    DateTime
   createdAt   DateTime @default(now())
   project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -55,6 +56,7 @@ model ConcludedTasks {
   description String
   priority    String
   status      String
+  timeSpent   Int?
   maturity    DateTime
   createdAt   DateTime
   completedAt DateTime @default(now())

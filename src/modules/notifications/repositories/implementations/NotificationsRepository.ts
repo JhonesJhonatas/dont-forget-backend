@@ -1,9 +1,9 @@
 import { AppError } from '../../../../errors/AppError'
-import { NotificationModel } from '../../../../mongo/mongoModels'
+import { NotificationModel } from '../../../../mongo/notifications/notificationsModel'
 import {
   GetNotificationsSchema,
   NotificationSchema,
-} from '../../../../mongo/schemaTypes'
+} from '../../../../mongo/notifications/types/notificationsTypes'
 import { ICreateNotificationDTO } from '../../dtos/ICreateNotificationDTO'
 import { INotificationsRepository } from '../INotificationsRepository'
 

@@ -10,6 +10,10 @@ import { ConcludeTaskByIdController } from '../modules/tasks/useCases/concludeTa
 import { ListConcludedTasksByProjectIdController } from '../modules/tasks/useCases/listConcludedTaskByProjectId/ListConcludedTasksByProjectIdController'
 import { ListAllConcludedTasksByUserIdController } from '../modules/tasks/useCases/listAllConcludedTasksByUserId/ListAllConcludedTasksByUserIdController'
 import { UndoCompletedTaskByIdController } from '../modules/tasks/useCases/undoCompletedTaskByProjectId/UndoCompletedTaskByIdController'
+import { StartStopWatchController } from '../modules/tasks/useCases/startStopWatch/StartStopWatchController'
+import { StopStopWatchController } from '../modules/tasks/useCases/stopStopWatch/stopStopWatchController'
+import { GetStopWatchByTaskIdController } from '../modules/tasks/useCases/getStopWatchByTaskId/getStopWatchByTaskIdController'
+import { DeleteStopWatchController } from '../modules/tasks/useCases/deleteStopWatch/deleteStopWatchController'
 
 const taskRoutes = Router()
 
@@ -26,6 +30,10 @@ const deleteOpenedTaskById = new DeleteOpenedTasksByIdController()
 const deleteConcludedTaskById = new DeleteConcludedTasksByIdController()
 const concludeTaskByIdController = new ConcludeTaskByIdController()
 const undoCompledTaskByIdController = new UndoCompletedTaskByIdController()
+const startStopWatchController = new StartStopWatchController()
+const stopStopWatchController = new StopStopWatchController()
+const getStopByTaskIdController = new GetStopWatchByTaskIdController()
+const deleteStopWatchController = new DeleteStopWatchController()
 
 taskRoutes.post(
   '/create-task',
@@ -57,10 +65,34 @@ taskRoutes.get(
   listConcludedTasksByProjectIdController.handle,
 )
 
+taskRoutes.get(
+  '/get-stopwatch-by-task-id/:taskId',
+  ensureAuthenticated,
+  getStopByTaskIdController.handle,
+)
+
 taskRoutes.put(
   '/edit-task-by-id',
   ensureAuthenticated,
   editTasController.handle,
+)
+
+taskRoutes.post(
+  '/start-stopwatch',
+  ensureAuthenticated,
+  startStopWatchController.handle,
+)
+
+taskRoutes.post(
+  '/stop-stopwatch',
+  ensureAuthenticated,
+  stopStopWatchController.handle,
+)
+
+taskRoutes.delete(
+  '/delete-stopwatch/:id',
+  ensureAuthenticated,
+  deleteStopWatchController.handle,
 )
 
 taskRoutes.delete(
