@@ -1,7 +1,7 @@
 import {
   GetNotificationsSchema,
   NotificationSchema,
-} from '../../../mongo/schemaTypes'
+} from '../../../mongo/notifications/types/notificationsTypes'
 import { ICreateNotificationDTO } from '../dtos/ICreateNotificationDTO'
 
 interface INotificationsRepository {
