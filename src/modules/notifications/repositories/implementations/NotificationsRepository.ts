@@ -21,19 +21,19 @@ class NotificationsRepository implements INotificationsRepository {
 
     const savedNotification = await notificationsModel.save()
 
-    return savedNotification
+    return savedNotification as NotificationSchema
   }
 
   async getAllNotifications(): Promise<NotificationSchema[]> {
     const notifications = await NotificationModel.find()
 
-    return notifications
+    return notifications as NotificationSchema[]
   }
 
   async getNotifications(userId: string): Promise<GetNotificationsSchema[]> {
     const notifications = await NotificationModel.find({ userId })
 
-    return notifications
+    return notifications as GetNotificationsSchema[]
   }
 
   async delete(id: string): Promise<void> {
