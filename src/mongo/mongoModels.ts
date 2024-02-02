@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { ICreateNotificationDTO } from '../modules/users/dtos/ICreateNotificationDTO'
+import { ICreateNotificationDTO } from '../modules/notifications/dtos/ICreateNotificationDTO'
 
 const notificationSchema = new Schema<ICreateNotificationDTO>({
   userId: { type: String, required: true },
