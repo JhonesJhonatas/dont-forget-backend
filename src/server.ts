@@ -23,6 +23,7 @@ const corsOptions = {
     'https://www.dontforget.com.br/',
     'https://dontforget.com.br',
   ],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 200,
 }
 
