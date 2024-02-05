@@ -20,6 +20,8 @@ class DeleteOpenedTaskByIdUseCase {
 
     const deletedTask = await this.tasksRepository.deleteOpenedTaskById(taskId)
 
+    await this.tasksRepository.deleteStopWatchesByTaskId(taskId)
+
     return deletedTask
   }
 }

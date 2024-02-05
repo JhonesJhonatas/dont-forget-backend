@@ -169,6 +169,10 @@ class TaskRepository implements ITasksRepository {
     return editedStopWatch as StopWatchSchema
   }
 
+  async deleteStopWatchesByTaskId(taskId: string): Promise<void> {
+    await StopWatchModel.deleteMany({ taskId })
+  }
+
   async deleteStopWatch(id: string): Promise<void> {
     try {
       await StopWatchModel.deleteOne({

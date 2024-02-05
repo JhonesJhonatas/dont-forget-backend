@@ -22,6 +22,8 @@ class DeleteConcludedTaskByIdUseCase {
     const deletedTask =
       await this.tasksRepository.deleteConcludedTaskById(taskId)
 
+    await this.tasksRepository.deleteStopWatchesByTaskId(taskId)
+
     return deletedTask
   }
 }
