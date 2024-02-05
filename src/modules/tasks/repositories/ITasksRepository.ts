@@ -58,6 +58,8 @@ interface ITasksRepository {
 
   deleteStopWatch(id: string): Promise<void>
 
+  deleteStopWatchesByTaskId(taskId: string): Promise<void>
+
   deleteOpenedTaskById(taskId: string): Promise<OpenedTasks>
 
   deleteConcludedTaskById(taskId: string): Promise<ConcludedTasks>

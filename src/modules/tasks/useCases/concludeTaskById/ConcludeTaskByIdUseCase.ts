@@ -51,22 +51,49 @@ class ConcludeTaskByIdUseCase {
       throw new AppError('Usuário não é proprietário do projeto', 401)
     }
 
-    const task = await this.tasksRepository.createConcludedTask({
-      createdAt,
-      description,
-      maturity,
-      priority,
-      projectId,
-      title,
-      userId,
-      status,
-    })
+    const createdConcludedTask = await this.tasksRepository.createConcludedTask(
+      {
+        createdAt,
+        description,
+        maturity,
+        priority,
+        projectId,
+        title,
+        userId,
+        status,
+      },
+    )
 
-    if (task) {
+    const stopWatchesList =
+      await this.tasksRepository.getStopWatchesByTaskId(taskId)
+
+    if (stopWatchesList) {
+      for (const stopWatch of stopWatchesList) {
+        const editData = stopWatch.endDate
+          ? {
+              id: stopWatch._id.toString(),
+              startDate: stopWatch.startDate,
+              endDate: stopWatch.endDate,
+              isActive: stopWatch.isActive,
+              taskId: createdConcludedTask.id,
+            }
+          : {
+              id: stopWatch._id.toString(),
+              startDate: stopWatch.startDate,
+              endDate: new Date(),
+              isActive: false,
+              taskId: createdConcludedTask.id,
+            }
+
+        await this.tasksRepository.editStopWatch(editData)
+      }
+    }
+
+    if (createdConcludedTask) {
       await this.tasksRepository.deleteOpenedTaskById(taskId)
     }
 
-    return task
+    return createdConcludedTask
   }
 }
 

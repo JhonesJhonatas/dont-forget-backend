@@ -36,6 +36,33 @@ class UndoCompletedTaskByIdUseCase {
       title: completedTask.title,
     })
 
+    const stopWatchesList = await this.tasksRepository.getStopWatchesByTaskId(
+      completedTask.id,
+    )
+
+    if (stopWatchesList) {
+      for (const stopWatch of stopWatchesList) {
+        const editData =
+          stopWatch.isActive === false
+            ? {
+                id: stopWatch._id.toString(),
+                startDate: stopWatch.startDate,
+                endDate: stopWatch.endDate as Date,
+                isActive: stopWatch.isActive,
+                taskId: createdOpenedTask.id,
+              }
+            : {
+                id: stopWatch._id.toString(),
+                startDate: stopWatch.startDate,
+                endDate: new Date(),
+                isActive: false,
+                taskId: createdOpenedTask.id,
+              }
+
+        await this.tasksRepository.editStopWatch(editData)
+      }
+    }
+
     await this.tasksRepository.deleteConcludedTaskById(completedTask.id)
 
     return createdOpenedTask
