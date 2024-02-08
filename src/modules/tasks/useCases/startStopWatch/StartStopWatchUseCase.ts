@@ -10,7 +10,7 @@ class StartStopWatchUseCase {
   ) {}
 
   async execute({ userId, taskId, startDate, isActive }: IStartStopWatchDTO) {
-    const notificationBody = { taskId, startDate, isActive }
+    const notificationBody = { userId, taskId, startDate, isActive }
 
     const openedTasks = await this.tasksRepository.findOpenedTasksByUserId(
       userId as string,
@@ -27,6 +27,7 @@ class StartStopWatchUseCase {
             if (stopWatch.isActive) {
               await this.tasksRepository.editStopWatch({
                 id: stopWatch._id.toString(),
+                userId: userId as string,
                 taskId: stopWatch.taskId,
                 startDate: stopWatch.startDate,
                 endDate: new Date(),

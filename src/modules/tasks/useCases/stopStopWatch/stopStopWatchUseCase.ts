@@ -11,12 +11,20 @@ class StopStopWatchUseCase {
 
   async execute({
     id,
+    userId,
     taskId,
     startDate,
     endDate,
     isActive,
   }: IStopStopWatchDTO) {
-    const notificationBody = { id, taskId, startDate, endDate, isActive }
+    const notificationBody = {
+      id,
+      userId,
+      taskId,
+      startDate,
+      endDate,
+      isActive,
+    }
 
     const stopedStopWatch =
       await this.tasksRepository.editStopWatch(notificationBody)
