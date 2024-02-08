@@ -126,11 +126,12 @@ class TaskRepository implements ITasksRepository {
   }
 
   async startStopWatch({
+    userId,
     taskId,
     startDate,
     isActive,
   }: IStartStopWatchDTO): Promise<StopWatchSchema> {
-    const stopWatchBody = { taskId, startDate, isActive }
+    const stopWatchBody = { userId, taskId, startDate, isActive }
 
     const stopWatchModel = new StopWatchModel(stopWatchBody)
 
@@ -145,8 +146,15 @@ class TaskRepository implements ITasksRepository {
     return stopWatches
   }
 
+  async getStopWatchesByUserId(userId: string): Promise<GetStopWatchSchema[]> {
+    const stopWatches = await StopWatchModel.find({ userId })
+
+    return stopWatches
+  }
+
   async editStopWatch({
     id,
+    userId,
     taskId,
     startDate,
     endDate,
@@ -157,6 +165,7 @@ class TaskRepository implements ITasksRepository {
       {
         $set: {
           taskId,
+          userId,
           startDate,
           endDate,
           isActive,

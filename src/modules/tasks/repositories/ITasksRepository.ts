@@ -42,6 +42,7 @@ interface ITasksRepository {
   }: IEditTaskDTO): Promise<OpenedTasks>
 
   startStopWatch({
+    userId,
     taskId,
     startDate,
     isActive,
@@ -49,7 +50,10 @@ interface ITasksRepository {
 
   getStopWatchesByTaskId(taskId: string): Promise<GetStopWatchSchema[]>
 
+  getStopWatchesByUserId(userId: string): Promise<GetStopWatchSchema[]>
+
   editStopWatch({
+    userId,
     taskId,
     startDate,
     endDate,
