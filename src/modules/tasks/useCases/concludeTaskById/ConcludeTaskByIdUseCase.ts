@@ -72,6 +72,7 @@ class ConcludeTaskByIdUseCase {
         const editData = stopWatch.endDate
           ? {
               id: stopWatch._id.toString(),
+              userId,
               startDate: stopWatch.startDate,
               endDate: stopWatch.endDate,
               isActive: stopWatch.isActive,
@@ -79,6 +80,7 @@ class ConcludeTaskByIdUseCase {
             }
           : {
               id: stopWatch._id.toString(),
+              userId,
               startDate: stopWatch.startDate,
               endDate: new Date(),
               isActive: false,

@@ -46,6 +46,7 @@ class UndoCompletedTaskByIdUseCase {
           stopWatch.isActive === false
             ? {
                 id: stopWatch._id.toString(),
+                userId,
                 startDate: stopWatch.startDate,
                 endDate: stopWatch.endDate as Date,
                 isActive: stopWatch.isActive,
@@ -53,6 +54,7 @@ class UndoCompletedTaskByIdUseCase {
               }
             : {
                 id: stopWatch._id.toString(),
+                userId,
                 startDate: stopWatch.startDate,
                 endDate: new Date(),
                 isActive: false,
