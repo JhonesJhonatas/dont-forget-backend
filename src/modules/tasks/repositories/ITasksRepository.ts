@@ -8,6 +8,7 @@ import {
 } from '../../../mongo/stopWatch/types/stopWatchTypes'
 import { IStartStopWatchDTO } from '../dtos/IStartStopWatchDTO'
 import { IStopStopWatchDTO } from '../dtos/IStopStopWatch'
+import { IGetOpenedTasksByWeek } from '../dtos/IGetOpenedTasksByWeek'
 
 interface ITasksRepository {
   create({
@@ -24,6 +25,11 @@ interface ITasksRepository {
   findAllLateTasks(date: Date): Promise<OpenedTasks[]>
 
   findOpenedTasksByProjectId(projectId: string): Promise<OpenedTasks[]>
+
+  getOpenedTasksByWeek({
+    startDate,
+    endDate,
+  }: IGetOpenedTasksByWeek): Promise<OpenedTasks[]>
 
   findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]>
 

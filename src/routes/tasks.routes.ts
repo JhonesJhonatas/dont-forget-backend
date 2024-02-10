@@ -14,6 +14,7 @@ import { StartStopWatchController } from '../modules/tasks/useCases/startStopWat
 import { StopStopWatchController } from '../modules/tasks/useCases/stopStopWatch/stopStopWatchController'
 import { GetStopWatchByTaskIdController } from '../modules/tasks/useCases/getStopWatchByTaskId/getStopWatchByTaskIdController'
 import { DeleteStopWatchController } from '../modules/tasks/useCases/deleteStopWatch/deleteStopWatchController'
+import { GetOpenedTasksByWeekController } from '../modules/tasks/useCases/getOpenedTasksByWeek/getOpenedTasksByWeekController'
 
 const taskRoutes = Router()
 
@@ -34,6 +35,7 @@ const startStopWatchController = new StartStopWatchController()
 const stopStopWatchController = new StopStopWatchController()
 const getStopByTaskIdController = new GetStopWatchByTaskIdController()
 const deleteStopWatchController = new DeleteStopWatchController()
+const getOpenedTasksByWeekController = new GetOpenedTasksByWeekController()
 
 taskRoutes.post(
   '/create-task',
@@ -63,6 +65,12 @@ taskRoutes.get(
   '/list-concluded-tasks-by-project-id/:projectId',
   ensureAuthenticated,
   listConcludedTasksByProjectIdController.handle,
+)
+
+taskRoutes.get(
+  '/get-opened-tasks-by-week',
+  ensureAuthenticated,
+  getOpenedTasksByWeekController.handle,
 )
 
 taskRoutes.get(

@@ -12,6 +12,7 @@ import { IStartStopWatchDTO } from '../../dtos/IStartStopWatchDTO'
 import { StopWatchModel } from '../../../../mongo/stopWatch/stopWatchModel'
 import { AppError } from '../../../../errors/AppError'
 import { IStopStopWatchDTO } from '../../dtos/IStopStopWatch'
+import { IGetOpenedTasksByWeek } from '../../dtos/IGetOpenedTasksByWeek'
 
 class TaskRepository implements ITasksRepository {
   async create({
@@ -64,6 +65,22 @@ class TaskRepository implements ITasksRepository {
     })
 
     return tasks
+  }
+
+  async getOpenedTasksByWeek({
+    startDate,
+    endDate,
+  }: IGetOpenedTasksByWeek): Promise<OpenedTasks[]> {
+    const tasksOfWeek = await prismaClient.openedTasks.findMany({
+      where: {
+        maturity: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+    })
+
+    return tasksOfWeek
   }
 
   async findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]> {
