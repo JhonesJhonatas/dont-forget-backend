@@ -74,7 +74,7 @@ class TaskRepository implements ITasksRepository {
   }: IGetOpenedTasksByWeek): Promise<OpenedTasks[]> {
     const tasksOfWeek = await prismaClient.openedTasks.findMany({
       where: {
-        id: userId,
+        userId,
         maturity: {
           gte: startDate,
           lte: endDate,
