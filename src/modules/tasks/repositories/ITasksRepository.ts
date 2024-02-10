@@ -29,6 +29,7 @@ interface ITasksRepository {
   getOpenedTasksByWeek({
     startDate,
     endDate,
+    userId,
   }: IGetOpenedTasksByWeek): Promise<OpenedTasks[]>
 
   findOpenedTasksByUserId(userId: string): Promise<OpenedTasks[]>

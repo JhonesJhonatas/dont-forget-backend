@@ -20,7 +20,7 @@ class GetOpenedTasksByWeekUseCase {
     private tasksRepository: ITasksRepository,
   ) {}
 
-  async execute({ startDate, endDate }: IGetOpenedTasksByWeek) {
+  async execute({ startDate, endDate, userId }: IGetOpenedTasksByWeek) {
     const startDateIsMonday = isMonday(startDate)
     const endDateIsSunday = isSunday(endDate)
     const isSameWeekCheck = isSameWeek(startDate, endDate, { weekStartsOn: 1 })
@@ -38,6 +38,7 @@ class GetOpenedTasksByWeekUseCase {
     }
 
     const tasksOfWeek = await this.tasksRepository.getOpenedTasksByWeek({
+      userId,
       startDate,
       endDate,
     })
