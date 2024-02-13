@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(uuid())
-  name       String
-  email      String    @unique
-  role       String
-  birthDate  DateTime
-  password   String
-  create_at  DateTime  @default(now())
-  updated_at DateTime  @default(now())
-  lastLogin  DateTime  @default(now())
-  Project    Project[]
+  id             String    @id @default(uuid())
+  name           String
+  email          String    @unique
+  role           String
+  birthDate      DateTime
+  password       String
+  create_at      DateTime  @default(now())
+  updated_at     DateTime  @default(now())
+  lastLogin      DateTime  @default(now())
+  confirmedEmail Boolean   @default(false)
+  Project        Project[]
 }
 
 model Project {
