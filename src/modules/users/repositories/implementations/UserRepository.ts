@@ -4,6 +4,9 @@ import { IUsersRepository } from '../IUsersRepository'
 import { prismaClient } from '../../../../prisma'
 import { IEditUserDTO } from '../../dtos/IEditUserDTO'
 import { IEditPasswordDTO } from '../../dtos/IEditPasswordDTO'
+import { GetEmailVerificationSchema } from '../../../../mongo/emailVerification/types/emailVerificationTypes'
+import { ICreateEmailVerificationDTO } from '../../dtos/ICreateEmailVerificationDTO'
+import { EmailVerificationModel } from '../../../../mongo/emailVerification/emailVerificationModel'
 
 class UserRepository implements IUsersRepository {
   async create({
@@ -61,6 +64,30 @@ class UserRepository implements IUsersRepository {
     })
 
     return user as User
+  }
+
+  async createEmailVerification({
+    userId,
+    code,
+    created_at,
+  }: ICreateEmailVerificationDTO): Promise<GetEmailVerificationSchema> {
+    const emailVerificationModel = new EmailVerificationModel({
+      userId,
+      code,
+      created_at,
+    })
+
+    const createdNotificationMopdel = await emailVerificationModel.save()
+
+    return createdNotificationMopdel as GetEmailVerificationSchema
+  }
+
+  async getEmailVerificationByUserId(
+    userId: string,
+  ): Promise<GetEmailVerificationSchema> {
+    const emailVerification = await EmailVerificationModel.findOne({ userId })
+
+    return emailVerification as GetEmailVerificationSchema
   }
 
   async edit({

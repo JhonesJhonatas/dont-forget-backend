@@ -7,6 +7,7 @@ import { GetUserDataController } from '../modules/users/useCases/getUserData/Get
 import { EditPasswordController } from '../modules/users/useCases/editPassword/EditPasswordController'
 import { RefreshTokenController } from '../modules/users/useCases/refreshToken/refreshTokenController'
 import { DeleteUserController } from '../modules/users/useCases/deleteUser/deleteUserController'
+import { SendEmailConfirmationController } from '../modules/users/useCases/sendEmailConfirmation/sendEmailConfirmationController'
 
 const userRoutes = Router()
 
@@ -17,6 +18,7 @@ const refreshTokenController = new RefreshTokenController()
 const editUserController = new EditUserController()
 const editPasswordController = new EditPasswordController()
 const deleteUserController = new DeleteUserController()
+const sendEmailVerificationController = new SendEmailConfirmationController()
 
 userRoutes.post('/create-user', createUserController.handle)
 
@@ -37,6 +39,11 @@ userRoutes.delete(
   '/delete-user',
   ensureAuthenticated,
   deleteUserController.handle,
+)
+userRoutes.post(
+  '/send-email-verification',
+  ensureAuthenticated,
+  sendEmailVerificationController.handle,
 )
 
 export { userRoutes }
