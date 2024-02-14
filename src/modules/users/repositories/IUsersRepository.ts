@@ -31,6 +31,7 @@ interface IUsersRepository {
   }: IEditUserDTO): Promise<User>
   editPassword({ id, password, updated_at }: IEditPasswordDTO): Promise<User>
   delete(id: string): Promise<User>
+  deleteEmailVerificationInformation(id: string): Promise<void>
 }
 
 export { IUsersRepository }

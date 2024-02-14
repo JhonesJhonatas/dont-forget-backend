@@ -8,10 +8,12 @@ class GetUserDataController {
 
     const getUserDataUseCase = container.resolve(GetUserDataUseCase)
 
-    const { name, email, role, birthDate } =
+    const { name, email, role, birthDate, confirmedEmail } =
       await getUserDataUseCase.execute(id)
 
-    return response.status(200).json({ name, email, role, birthDate })
+    return response
+      .status(200)
+      .json({ name, email, role, birthDate, confirmedEmail })
   }
 }
 

@@ -28,10 +28,15 @@ class SendEmailVerificationCodeUseCase {
       throw new AppError('Incorrect Code', 400)
     }
 
-    await this.usersRepository.edit({
-      ...userCompleteData,
-      confirmedEmail: true,
-    })
+    await Promise.all([
+      this.usersRepository.edit({
+        ...userCompleteData,
+        confirmedEmail: true,
+      }),
+      this.usersRepository.deleteEmailVerificationInformation(
+        sentVerificationCodeData._id.toString(),
+      ),
+    ])
 
     return 'Email Confirmed'
   }

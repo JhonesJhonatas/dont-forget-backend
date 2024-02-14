@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe'
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 import { AppError } from '../../../../errors/AppError'
 import { createTransport } from 'nodemailer'
+import { MailOptions } from 'nodemailer/lib/json-transport'
 
 @injectable()
 class SendEmailConfirmationUseCase {
@@ -49,11 +50,31 @@ class SendEmailConfirmationUseCase {
       },
     })
 
-    const mailOptions = {
+    const mailOptions: MailOptions = {
       from: process.env.EMAIL_ACESS,
       to: userCompleteData.email,
       subject: 'Verificação de Email',
-      text: generatedCode,
+      html: `
+      <div style="width: 100%;">
+        <table style="margin: 0 auto; width: 60vw; background-color: #3F3F46; padding: 2rem 1rem; border-radius: 6px; font-family: 'Poppins', sans-serif;">
+          <tr>
+            <td style="text-align: center; color: #ffffff; font-size: 2rem; font-weight: bold;">Dont Forget</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; color: #ffffff; font-weight:300; font-size: 1.25rem; ">Aqui está o seu código para verificação de email</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; color: #ffffff; font-weight:300; font-size: 1rem; ">Utilize no nosso sistema para validação do seu email</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; background-color: #71717A; padding: 0.5rem; border-radius: 6px; font-size: 2rem; font-weight: bold; color: #ffffff; border: 1px solid #52525B;">${generatedCode}</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; color: #ffffff; font-weight:300; font-size: 1rem; "><a href="www.dontforget.com.br" target="_blank" style="color: #ffffff; text-decoration: none;">www.dontforget.com.br</a></td>
+          </tr>
+        </table>
+      </div>
+      `,
     }
 
     try {
@@ -61,14 +82,13 @@ class SendEmailConfirmationUseCase {
         if (error) {
           return console.log(error)
         }
-
-        await this.usersRepository.createEmailVerification({
-          userId: userCompleteData.id,
-          code: generatedCode,
-          created_at: new Date(),
-        })
-
         console.log('E-mail enviado: ' + info.response)
+      })
+
+      await this.usersRepository.createEmailVerification({
+        userId: userCompleteData.id,
+        code: generatedCode,
+        created_at: new Date(),
       })
     } catch (err) {
       throw new AppError('Email Not Sent, Unknow Error.', 400)

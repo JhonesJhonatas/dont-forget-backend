@@ -10,11 +10,22 @@ class EditUseUseCase {
   ) {}
 
   async execute({ id, name, email, birthDate, role }: IEditUserDTO) {
-    const oldUserData = await this.usersRepository.findById(id)
+    const [oldUserData, sentVerificationCodeData] = await Promise.all([
+      this.usersRepository.findById(id),
+      this.usersRepository.getEmailVerificationByUserId(id),
+    ])
 
     const todayDate = new Date()
 
     todayDate.setHours(0, 0, 0, 0)
+
+    if (oldUserData.email !== email && sentVerificationCodeData) {
+      await this.usersRepository.deleteEmailVerificationInformation(
+        sentVerificationCodeData._id.toString(),
+      )
+    }
+
+    const needNewEmailConfirmation = oldUserData.email !== email
 
     const updatedUser = await this.usersRepository.edit({
       ...oldUserData,
@@ -24,6 +35,7 @@ class EditUseUseCase {
       role,
       birthDate,
       updated_at: todayDate,
+      confirmedEmail: !needNewEmailConfirmation,
     })
 
     return updatedUser

@@ -138,6 +138,12 @@ class UserRepository implements IUsersRepository {
 
     return deletedUser
   }
+
+  async deleteEmailVerificationInformation(id: string): Promise<void> {
+    await EmailVerificationModel.deleteOne({
+      _id: id,
+    })
+  }
 }
 
 export { UserRepository }
