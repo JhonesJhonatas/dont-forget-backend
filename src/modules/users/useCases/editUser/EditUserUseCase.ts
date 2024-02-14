@@ -10,11 +10,14 @@ class EditUseUseCase {
   ) {}
 
   async execute({ id, name, email, birthDate, role }: IEditUserDTO) {
+    const oldUserData = await this.usersRepository.findById(id)
+
     const todayDate = new Date()
 
     todayDate.setHours(0, 0, 0, 0)
 
     const updatedUser = await this.usersRepository.edit({
+      ...oldUserData,
       id,
       name,
       email,

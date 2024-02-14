@@ -27,6 +27,7 @@ interface IUsersRepository {
     birthDate,
     updated_at,
     lastLogin,
+    confirmedEmail,
   }: IEditUserDTO): Promise<User>
   editPassword({ id, password, updated_at }: IEditPasswordDTO): Promise<User>
   delete(id: string): Promise<User>

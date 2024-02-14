@@ -98,10 +98,19 @@ class UserRepository implements IUsersRepository {
     birthDate,
     updated_at,
     lastLogin,
+    confirmedEmail,
   }: IEditUserDTO): Promise<User> {
     const user = await prismaClient.user.update({
       where: { id },
-      data: { name, email, role, birthDate, lastLogin, updated_at },
+      data: {
+        name,
+        email,
+        role,
+        birthDate,
+        lastLogin,
+        updated_at,
+        confirmedEmail,
+      },
     })
 
     return user
