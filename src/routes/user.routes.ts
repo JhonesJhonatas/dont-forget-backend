@@ -7,6 +7,9 @@ import { GetUserDataController } from '../modules/users/useCases/getUserData/Get
 import { EditPasswordController } from '../modules/users/useCases/editPassword/EditPasswordController'
 import { RefreshTokenController } from '../modules/users/useCases/refreshToken/refreshTokenController'
 import { DeleteUserController } from '../modules/users/useCases/deleteUser/deleteUserController'
+import { SendEmailConfirmationController } from '../modules/users/useCases/sendEmailConfirmation/sendEmailConfirmationController'
+import { SendEmailVerificationCodeController } from '../modules/users/useCases/sendEmailVerificationCode/SendEmailVerificationCodeController'
+import { GetEmailVerificationInformationController } from '../modules/users/useCases/getEmailVerificationInformation/GetEmailVerificationInformationController'
 
 const userRoutes = Router()
 
@@ -17,6 +20,11 @@ const refreshTokenController = new RefreshTokenController()
 const editUserController = new EditUserController()
 const editPasswordController = new EditPasswordController()
 const deleteUserController = new DeleteUserController()
+const sendEmailVerificationController = new SendEmailConfirmationController()
+const sendEmailVerificationCodeController =
+  new SendEmailVerificationCodeController()
+const getEmailVerificationInformationController =
+  new GetEmailVerificationInformationController()
 
 userRoutes.post('/create-user', createUserController.handle)
 
@@ -24,6 +32,11 @@ userRoutes.get(
   '/get-user-data',
   ensureAuthenticated,
   getUserDataController.handle,
+)
+userRoutes.get(
+  '/get-email-verification-information',
+  ensureAuthenticated,
+  getEmailVerificationInformationController.handle,
 )
 userRoutes.post('/session', authenticateUserController.handle)
 userRoutes.post('/refresh-token', refreshTokenController.handle)
@@ -37,6 +50,16 @@ userRoutes.delete(
   '/delete-user',
   ensureAuthenticated,
   deleteUserController.handle,
+)
+userRoutes.post(
+  '/send-email-verification',
+  ensureAuthenticated,
+  sendEmailVerificationController.handle,
+)
+userRoutes.post(
+  '/send-email-verification-code',
+  ensureAuthenticated,
+  sendEmailVerificationCodeController.handle,
 )
 
 export { userRoutes }

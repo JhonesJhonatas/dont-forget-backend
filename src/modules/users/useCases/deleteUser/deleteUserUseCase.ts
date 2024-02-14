@@ -14,10 +14,12 @@ class DeleteUserUseCase {
   ) {}
 
   async execute(userId: string) {
-    const [userToDelete, stopWatches] = await Promise.all([
-      this.usersRepository.findById(userId),
-      this.tasksRepository.getStopWatchesByUserId(userId),
-    ])
+    const [userToDelete, stopWatches, sentVerificationCodeData] =
+      await Promise.all([
+        this.usersRepository.findById(userId),
+        this.tasksRepository.getStopWatchesByUserId(userId),
+        this.usersRepository.getEmailVerificationByUserId(userId),
+      ])
 
     if (!userToDelete) {
       throw new AppError('User Not Found', 404)
@@ -27,6 +29,12 @@ class DeleteUserUseCase {
       for (const stopWatch of stopWatches) {
         await this.tasksRepository.deleteStopWatch(stopWatch._id.toString())
       }
+    }
+
+    if (sentVerificationCodeData) {
+      await this.usersRepository.deleteEmailVerificationInformation(
+        sentVerificationCodeData._id.toString(),
+      )
     }
 
     const deletedUser = await this.usersRepository.delete(userId)

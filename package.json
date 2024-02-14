@@ -20,6 +20,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.8.6",
     "@types/node-cron": "^3.0.11",
+    "@types/nodemailer": "^6.4.14",
     "eslint": "^8.51.0",
     "prisma": "^5.4.2",
     "tsx": "^3.13.0"
@@ -37,6 +38,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.4",
     "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.9",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.8.0",
     "typescript": "^5.2.2",

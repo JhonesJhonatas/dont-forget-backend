@@ -4,6 +4,7 @@ import { IUsersRepository } from '../../repositories/IUsersRepository'
 import { AppError } from '../../../../errors/AppError'
 import { IProjectsRepository } from '../../../projects/repositories/IProjectsRepository'
 import { ICreateUserWithProject } from '../../dtos/ICreateUserWithProject'
+import { INotificationsRepository } from '../../../notifications/repositories/INotificationsRepository'
 
 @injectable()
 class CreateUserUseCase {
@@ -13,6 +14,9 @@ class CreateUserUseCase {
 
     @inject('ProjectsRepository')
     private projectsRepository: IProjectsRepository,
+
+    @inject('NotificationsRepository')
+    private notificationsRepository: INotificationsRepository,
   ) {}
 
   async execute({
@@ -42,12 +46,22 @@ class CreateUserUseCase {
     })
 
     if (user) {
-      await this.projectsRepository.create({
-        color: projectColor,
-        description: projectDescription,
-        title: projectName,
-        userId: user.id,
-      })
+      await Promise.all([
+        this.projectsRepository.create({
+          color: projectColor,
+          description: projectDescription,
+          title: projectName,
+          userId: user.id,
+        }),
+        this.notificationsRepository.create({
+          type: 'warning',
+          title: 'Confirmação de email',
+          description:
+            'Lembre-se de confirmar seu email na área de configurações para não perder acesso ao sistema.',
+          read: false,
+          userId: user.id,
+        }),
+      ])
     }
 
     return user
