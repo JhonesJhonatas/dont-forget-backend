@@ -6,7 +6,7 @@ interface IEditUserDTO {
   birthDate: Date
   updated_at?: Date
   lastLogin?: Date
-  confirmedEmail: boolean
+  confirmedEmail?: boolean
 }
 
 export { IEditUserDTO }
