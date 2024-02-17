@@ -29,7 +29,7 @@ class UndoCompletedTaskByIdUseCase {
     const createdOpenedTask = await this.tasksRepository.create({
       userId,
       description: completedTask.description,
-      maturity: completedTask.maturity,
+      maturity: completedTask.maturity ? completedTask.maturity : undefined,
       priority: completedTask.priority,
       projectId: completedTask.projectId,
       status: 'toDo',

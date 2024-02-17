@@ -44,26 +44,47 @@ class GetOpenedTasksByWeekUseCase {
     })
 
     const monday = tasksOfWeek.filter((task) => {
+      if (!task.maturity) {
+        return false
+      }
       return isMonday(task.maturity)
     })
-    const tuesday = tasksOfWeek.filter((task) =>
-      isTuesday(new Date(task.maturity)),
-    )
-    const wednesday = tasksOfWeek.filter((task) =>
-      isWednesday(new Date(task.maturity)),
-    )
-    const thursday = tasksOfWeek.filter((task) =>
-      isThursday(new Date(task.maturity)),
-    )
-    const friday = tasksOfWeek.filter((task) =>
-      isFriday(new Date(task.maturity)),
-    )
-    const saturday = tasksOfWeek.filter((task) =>
-      isSaturday(new Date(task.maturity)),
-    )
-    const sunday = tasksOfWeek.filter((task) =>
-      isSunday(new Date(task.maturity)),
-    )
+    const tuesday = tasksOfWeek.filter((task) => {
+      if (!task.maturity) {
+        return false
+      }
+      return isTuesday(new Date(task.maturity))
+    })
+    const wednesday = tasksOfWeek.filter((task) => {
+      if (!task.maturity) {
+        return false
+      }
+      return isWednesday(new Date(task.maturity))
+    })
+    const thursday = tasksOfWeek.filter((task) => {
+      if (!task.maturity) {
+        return false
+      }
+      return isThursday(new Date(task.maturity))
+    })
+    const friday = tasksOfWeek.filter((task) => {
+      if (!task.maturity) {
+        return false
+      }
+      return isFriday(new Date(task.maturity))
+    })
+    const saturday = tasksOfWeek.filter((task) => {
+      if (!task.maturity) {
+        return false
+      }
+      return isSaturday(new Date(task.maturity))
+    })
+    const sunday = tasksOfWeek.filter((task) => {
+      if (!task.maturity) {
+        return false
+      }
+      return isSunday(new Date(task.maturity))
+    })
 
     const tasksByWeek = {
       monday,

@@ -28,10 +28,9 @@ class NotificationJobs {
         (existingNotification) => {
           return (
             existingNotification.description ===
-            `A tarefa ${task.title} está atrasada desde ${format(
-              task.maturity,
-              'dd/MM/yyyy',
-            )}.`
+            `A tarefa ${task.title} está atrasada desde ${
+              task.maturity && format(task.maturity, 'dd/MM/yyyy')
+            }.`
           )
         },
       )
@@ -42,10 +41,9 @@ class NotificationJobs {
         userId: task.userId,
         type: 'warning',
         title: 'Tarefa Atrasada',
-        description: `A tarefa ${task.title} está atrasada desde ${format(
-          task.maturity,
-          'dd/MM/yyyy',
-        )}.`,
+        description: `A tarefa ${task.title} está atrasada desde ${
+          task.maturity && format(task.maturity, 'dd/MM/yyyy')
+        }.`,
         read: false,
       })
     })
