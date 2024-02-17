@@ -3,7 +3,7 @@ interface ICreateTaskDTO {
   description: string
   priority: string
   status: string
-  maturity: Date
+  maturity?: Date
   projectId: string
   userId: string
 }
